@@ -1,7 +1,7 @@
 package models
 
 type User struct{
-	id uint `gorm:"column:id;primaryKey;autoIncrement"`
+	ID uint `gorm:"column:ID;primaryKey;autoIncrement"`
 	Username string `gorm:"column:Username"`
 	Email string `gorm:"uniqueIndex;column:Email"`
 	Password string `gorm:"column:Password"`

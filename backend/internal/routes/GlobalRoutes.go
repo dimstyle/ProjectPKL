@@ -6,10 +6,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func rootRoutes(r *gin.Engine){
+	r.Static("/assets","./frontend/dist/assets")
+	r.NoRoute(func(c *gin.Context){
+		c.File("./frontend/dist/index.html")
+	})
+}
+
 func SetupRoutes() *gin.Engine{
 	r := gin.Default()
-	
-	auth.AuthRoutes(r)
+	api := r.Group("/api")
+	rootRoutes(r)
+
+	auth.AuthRoutes(api)
 	
 	return r
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AuthRoutes(r *gin.Engine){
+func AuthRoutes(r *gin.RouterGroup){
 	auth := r.Group("/auth")
 
 	// Regist Registration Routes

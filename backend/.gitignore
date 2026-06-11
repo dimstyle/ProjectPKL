@@ -6,3 +6,5 @@ tmp/
 
 # Development Env
 var/
+
+frontend/
