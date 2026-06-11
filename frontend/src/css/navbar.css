@@ -1,0 +1,27 @@
+nav {
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
+    width: 100%;
+    background-image: linear-gradient(to bottom, blue, purple);
+    box-shadow: 0px 0px 5px black;
+    font-family: cursive;
+}
+
+input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    height: 1rem;
+    width: 15rem;
+}
+
+.akadub {
+    color: white;
+}
