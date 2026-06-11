@@ -1,16 +1,20 @@
 package main
 
-import(
+import (
+	"backend/config"
+	"backend/internal/auth"
+	"backend/internal/database"
+
 	"github.com/gin-gonic/gin"
 )
 
 func main(){
-	router := gin.Default();
-	router.GET("/", func(c *gin.Context){
-		c.JSON(200,gin.H{
-			"message" : "hello",
-		})
-	})
+	config.LoadEnv()
+	database.ConnectDB()
+
+	router := gin.Default()
+
+	auth.RegisterRoutes(router)
 
 	router.Run()
 }
