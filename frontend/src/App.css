@@ -8,8 +8,6 @@ body {
 
 .userlist {
     padding: 1rem;
-    padding-left: 10rem;
-    padding-right: 10rem;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -20,4 +18,9 @@ body {
     display: flex;
     justify-content: center;
     width: 100%;
+}
+
+main {
+    padding-right: 5rem;
+    padding-left: 5rem;
 }

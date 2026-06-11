@@ -17,9 +17,13 @@ function App() {
   return (
     <>
       <Navbar search={search} setSearch={setSearch}></Navbar>
-      <div className='userlist'>{filtereduser.length > 0 ? (filtereduser.map((user) => (
+      <main>
+        <div className='userlist'>{filtereduser.length > 0 ? (filtereduser.map((user) => (
         <UserCard key={user.id} name={user.name} email={user.email}/>
-      ))) : ( <div className='notfound'><h1>No user found.</h1></div> )}</div>
+          ))) : ( <div className='notfound'><h1>No user found.</h1></div> )}
+        </div>
+      </main>
+      
     </>
   )
 }
