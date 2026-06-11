@@ -1,23 +1,18 @@
 package auth
 
 import (
+	"backend/internal/auth/handlers"
+
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterRoutes(r *gin.Engine) *gin.Engine{
-	r.Group("/auth")
+func AuthRoutes(r *gin.Engine){
+	auth := r.Group("/auth")
 
 	// Regist Registration Routes
-
-	RService := NewRegistrationService()
-	RHandler := NewRegistrationHandler(RService)
-	_ = r.POST("/login",RHandler.Registration)
+	auth.POST("/registration",handlers.NewRegistrationHandler().Registration)
 
 	// Regist Login Routes
-	LService := NewLoginService()
-	LHandler := NewLoginHandler(LService)
-	_ = r.POST("/login",LHandler.Login)
-
-	return r
+	auth.POST("/login",handlers.NewLoginHandler().Login)
 
 }

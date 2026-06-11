@@ -8,7 +8,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
-	"backend/internal/auth"
+	"backend/internal/auth/models"
 )
 
 func ConnectDB() *gorm.DB{
@@ -27,7 +27,7 @@ func ConnectDB() *gorm.DB{
 		log.Fatal("failed to connect postgres database")
 	}
 
-	db.AutoMigrate(&auth.User{})
+	db.AutoMigrate(&models.User{})
 
 	return db
 
