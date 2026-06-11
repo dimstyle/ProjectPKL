@@ -1,0 +1,8 @@
+# Environment
+.env
+
+# Air
+tmp/
+
+# Development Env
+var/
