@@ -1,0 +1,59 @@
+.registrationBody {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(to bottom, blue, purple);
+}
+
+.regiscard {
+    color: lightblue;
+    border: 2px solid white;
+    font-family: cursive;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-image: linear-gradient(to bottom, #333, #555);
+    box-shadow: 0px 0px 50px black;
+}
+
+.inputs {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    padding-bottom: 4rem;
+}
+
+input {
+    border: none;
+    border-radius: 5px;
+    width: 15rem;
+    height: 2rem;
+}
+
+a {
+    color: white;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bolder;
+    cursor: pointer;
+    width: 6rem;
+    height: 2rem;
+    background-color: blue;
+    color: lightblue;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+button:hover {
+    box-shadow: 0px 0px 10px blue;
+}
