@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import '../css/registration.css'
 import { useRef } from 'react'
 
@@ -47,7 +48,7 @@ function Registration(){
                     <button onClick={signupAction}>Sign up</button>
                     <div>
                         <p>Already have an account?</p>
-                        <a href="/My-first-php/page/login.php">Log In</a>
+                        <Link to="/login">Log In</Link>
                     </div>
                 </div>
             </div>
