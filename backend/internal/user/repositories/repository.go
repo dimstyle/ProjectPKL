@@ -4,6 +4,8 @@ import (
 	"backend/internal/database"
 	"backend/internal/user/dto"
 
+	"backend/internal/auth/models"
+
 	"log"
 )
 
@@ -14,7 +16,7 @@ func (repo *UserRepository) GetAllUser() ([]dto.GetUserList, error){
 
 	db := database.ConnectDB()
 
-	err := db.Select("ID","Username","Email").Find(&users).Error
+	err := db.Model(&models.User{}).Select("ID","Username","Email").Find(&users).Error
 
 	if(err != nil){
 		log.Println(err)

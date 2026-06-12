@@ -17,5 +17,19 @@ type ListuserHandler struct {
 }
 
 func (handler *ListuserHandler) Listuser(c *gin.Context){
-	
+	users, err := handler.service.GetUser()
+
+	if(err != nil){
+		c.JSON(404,gin.H{
+			"message" : "user not found",
+			"users"	: nil,
+		})
+		return
+	}
+
+
+	c.JSON(200,gin.H{
+		"message" : "users found",
+		"users" : users,
+	})
 }

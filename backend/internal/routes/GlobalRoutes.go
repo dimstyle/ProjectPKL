@@ -2,6 +2,7 @@ package routes
 
 import (
 	"backend/internal/auth"
+	"backend/internal/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,6 +20,7 @@ func SetupRoutes() *gin.Engine{
 	rootRoutes(r)
 
 	auth.AuthRoutes(api)
+	user.UserRoutes(api)
 	
 	return r
 }
