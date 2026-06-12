@@ -5,7 +5,7 @@ function Login(){
     return(
         <div class="loginbody">
             <div class="logincard">
-                <h1>Login</h1>
+                <h1 className='h1login'>Login</h1>
                 <div class="inputs" method="post" action="/My-first-php/services/auth.php">
                     <input type="hidden" name="form_type" value="login" />
                     <input name="nama" type="text" placeholder="Nama"/>

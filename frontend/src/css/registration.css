@@ -21,20 +21,20 @@
 
 .inputs {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     flex-direction: column;
     align-items: center;
 }
 
-h1 {
+.h1regist {
     padding-bottom: 4rem;
 }
 
-input {
+.inputs input {
     border: none;
     border-radius: 5px;
     width: 15rem;
-    height: 2rem;
+    height: 1rem;
 }
 
 a {

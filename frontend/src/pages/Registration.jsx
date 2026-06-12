@@ -40,7 +40,7 @@ function Registration(){
     return(
         <div className="registrationBody">
             <div className="regiscard">
-                <h1>Register</h1>
+                <h1 className='h1regist'>Register</h1>
                 <div className="inputs">
                     <input ref={username} type="text" placeholder="username"/>
                     <input ref={email} type="text" placeholder="email"/>

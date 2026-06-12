@@ -19,22 +19,8 @@
     box-shadow: 0px 0px 50px black;
 }
 
-.inputs {
-    display: flex;
-    gap: 3rem;
-    flex-direction: column;
-    align-items: center;
-}
-
-h1 {
+.h1login {
     padding-bottom: 4rem;
-}
-
-input {
-    border: none;
-    border-radius: 5px;
-    width: 15rem;
-    height: 2rem;
 }
 
 a {

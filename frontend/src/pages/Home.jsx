@@ -65,7 +65,8 @@ function Home(){
 
     return (
         <>
-            <Navbar search={search} setSearch={setSearch}></Navbar>
+            <div className='home'>
+                <Navbar search={search} setSearch={setSearch}></Navbar>
             <main>
                 <div className='userlist'>
                     {filteredUser.length > 0? filteredUser.map(user => (
@@ -73,6 +74,7 @@ function Home(){
                     )) : ( <div className='notfound'><h1>No user found.</h1></div> ) }
                 </div>
             </main>
+            </div>
         </>
     )
 }
