@@ -20,3 +20,17 @@ func (repo *AuthRepository) CreateUserData(user models.User) error {
 
 	return nil
 }
+
+func(repo *AuthRepository) GetUserWithEmail(Email string) (*models.User,error) {
+	var user models.User
+
+	db := database.ConnectDB()
+	err := db.Where("\"Email\" = ?",Email).Find(&user).Error
+
+	if(err != nil){
+		log.Println(err)
+		return nil,err
+	}
+	
+	return &user,err
+}

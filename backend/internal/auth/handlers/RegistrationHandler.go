@@ -25,7 +25,7 @@ func (handler *RegistrationHandler) Registration(c *gin.Context){
 
 	if(err != nil){
 		c.JSON(400,gin.H{
-			"error" : err.Error(),
+			"message" : err.Error(),
 		})
 		return
 	}
@@ -34,7 +34,7 @@ func (handler *RegistrationHandler) Registration(c *gin.Context){
 
 	if(err != nil){
 		c.JSON(500,gin.H{
-			"error" : err.Error(),
+			"message" : err.Error(),
 		})
 		return
 	}
