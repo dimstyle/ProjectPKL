@@ -6,21 +6,6 @@ import { useEffect, useState} from "react";
 import "../App.css"
 
 function Home(){
-    
-
-    // const users = {
-    //     message : "succes to fetch user",
-    //     users : [
-    //         {id: 1,Username: 'Dimas Hytam', Email: 'dimhytam1945@gmail.com'},
-    //         {id: 2,Username: 'Dimas Coklat', Email: 'dimhytam1955@gmail.com'},
-    //         {id: 3,Username: 'Dimas Abu-abu', Email: 'dimhytam1965@gmail.com'}
-    // ]}
-
-    //     const users = [
-    //         {id: 1,Username: 'Dimas Hytam', Email: 'dimhytam1945@gmail.com'},
-    //         {id: 2,Username: 'Dimas Coklat', Email: 'dimhytam1955@gmail.com'},
-    //         {id: 3,Username: 'Dimas Abu-abu', Email: 'dimhytam1965@gmail.com'}
-    // ]
 
     const [users,setUsers] = useState([]) //list of users
     const [filteredUser, setFilteredUser] = useState()
@@ -32,7 +17,7 @@ function Home(){
         (async()=>{
             setError("")
             try{
-                const response = await fetch("/api/user/list")
+                const response = await fetch("/api/user/list")  
 
                 if(!response.ok){
                     throw new Error("users not found")
@@ -70,7 +55,7 @@ function Home(){
             <main>
                 <div className='userlist'>
                     {filteredUser.length > 0? filteredUser.map(user => (
-                        <UserCard key={user.id} name={user.Username} email={user.Email} />
+                        <UserCard key={user.ID} name={user.Username} email={user.Email} />
                     )) : ( <div className='notfound'><h1>No user found.</h1></div> ) }
                 </div>
             </main>

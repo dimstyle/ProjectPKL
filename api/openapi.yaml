@@ -1,4 +1,4 @@
-openapi: 3.2.0
+openapi: 3.0.3
 
 info:
   title: API Users Management
@@ -41,10 +41,38 @@ paths:
           description: Success
           content:
             application/json:
-              schema:
-                $ref : "#/components/schemas/DefaultResponse"
+                schema:
+                  $ref : "#/components/schemas/DefaultResponse"
 
-                
+  /api/user/list:
+    get:
+      summary: List Users
+
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+
+              schema:
+                items:
+                  $ref : "#/components/schemas/ListUsersResponse"
+              
+              example:
+                message: "success to fetch users"
+                users:
+                  - ID: 1
+                    Email: dummy1@gmail.com
+                    Username: dummy1
+          
+                  - ID: 2
+                    Email: dummy2@gmail.com
+                    Username: dummy2
+          
+                  - ID: 3
+                    Email: dummy3@gmail.com
+                    Username: dummy3
+
 
 components:
 
@@ -56,7 +84,7 @@ components:
         message: 
           type : string
 
-    ReigstrationRequest:
+    RegistrationRequest:
       type: object
       properties:
         Username:
@@ -73,6 +101,28 @@ components:
           type : string
         Passsword:
           type: string
+
+
+    GetUserResponse:
+      type: object
+      properties:
+        ID:
+          type: integer
+        Email: 
+          type: string
+        Username:
+          type: string
+    
+    ListUsersResponse:
+      type: object
+      properties:
+        message: 
+          type: string
+        users:
+          type: array
+          items:
+            $ref : "#/components/schemas/GetUserResponse"
+
 
 
         
