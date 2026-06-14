@@ -3,6 +3,8 @@ import Home from './pages/Home';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import UserInfo from './pages/UserInfo';
+import AccountSettings from './pages/AccountSettings'
 
 function App() {
   return(
@@ -10,7 +12,10 @@ function App() {
       <Route path='/' element={<Home />}/>
       <Route path='/registration' element={<Registration />}/>
       <Route path='/login' element={<Login />} />
-      <Route path='/dashboard/:userId' element={<Dashboard />} />
+      <Route path='/dashboard/:userId' element={<Dashboard />}>
+        <Route index element={<UserInfo />} />
+        <Route path="settings" element={<AccountSettings />}/>
+      </Route>
     </Routes>
   )
 

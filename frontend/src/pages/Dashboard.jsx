@@ -1,13 +1,13 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Outlet } from "react-router-dom";
 import profileIcon from "../assets/download-removebg-preview.png"
 import "../css/dashboard.css"
 
-const userData = {
-    '1' : { name: 'Hytam', email: 'Hytam@gmail.com', age: '1945', skin: 'black'},
-    '2' : { name: 'Putyh', email: 'Putyh@gmail.com', age: '1899', skin: 'white'}
-}
-
 export default function Dashboard() {
+    const userData = {
+        '1' : { name: 'Hytam', email: 'Hytam@gmail.com', age: '1945', skin: 'black'},
+        '2' : { name: 'Putyh', email: 'Putyh@gmail.com', age: '1899', skin: 'white'}
+    }
+    
     const { userId } = useParams()
     const user = userData[userId]
     
@@ -25,16 +25,18 @@ export default function Dashboard() {
         <>
             <div className="dashboardbody">
                 <div className="sidebar">
-                    <img src={profileIcon} alt="profileIcon" width={"100rem"} />
-                    <h1>{user.name}</h1>
-                    <Link to="/">Back</Link>
+                    <div className="userprofile">
+                        <img src={profileIcon} alt="profileIcon" width={"100rem"} />
+                        <h1 className="username">{user.name}</h1>
+                    </div>
+                    <div className="navigation">
+                        <Link className="navlink" to={`/dashboard/${userId}`}>User Info</Link>
+                        <Link className="navlink" to={`/dashboard/${userId}/settings`}>Settings</Link>
+                    </div>
+                    <Link className="logout" to="/">Back</Link>
                 </div>
-                <div className="userinfo">
-                    <h1>User Info</h1>
-                    <p>name: {user.name}</p>
-                    <p>email: {user.email}</p>
-                    <p>age: {user.age}</p>
-                    <p>skin: {user.skin}</p>
+                <div>
+                    <Outlet />
                 </div>
             </div>
         </>
