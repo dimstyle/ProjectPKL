@@ -7,34 +7,39 @@ import "../App.css"
 
 function Home(){
 
-    const [users,setUsers] = useState([]) //list of users
+    const users = [
+        {id: 1, Username: "Hytam", Email:"Hytam@gmail.com"},
+        {id: 2, Username: "Putyh", Email:"Putyh@gmail.com"}
+    ]
+
+    // const [users,setUsers] = useState([]) //list of users
     const [filteredUser, setFilteredUser] = useState()
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
     const [search, setSearch] = useState('');
 
-    useEffect(()=>{
-        (async()=>{
-            setError("")
-            try{
-                const response = await fetch("/api/user/list")  
+    // useEffect(()=>{
+    //     (async()=>{
+    //         setError("")
+    //         try{
+    //             const response = await fetch("/api/user/list")  
 
-                if(!response.ok){
-                    throw new Error("users not found")
-                }
+    //             if(!response.ok){
+    //                 throw new Error("users not found")
+    //             }
 
-                const usersdata = await response.json(); //list of users
+    //             const usersdata = await response.json(); //list of users
                
-                setFilteredUser(usersdata.users)
-                setUsers(usersdata.users)
-            }catch(error){
-                setError(error.message) 
-            }finally{
-                setLoading(false)
-            }
-        })()
-        setLoading(false)
-    },[])
+    //             setFilteredUser(usersdata.users)
+    //             setUsers(usersdata.users)
+    //         }catch(error){
+    //             setError(error.message) 
+    //         }finally{
+    //             setLoading(false)
+    //         }
+    //     })()
+    //     setLoading(false)
+    // },[])
 
     useEffect(()=>{
         const users_before_filtered = users;
@@ -44,9 +49,9 @@ function Home(){
     },[search])
 
     
-    if(loading) return (<Loading />)
+    // if(loading) return (<Loading />)
 
-    if(error) return (<Error />)
+    // if(error) return (<Error />)
 
     return (
         <>
@@ -55,7 +60,7 @@ function Home(){
             <main>
                 <div className='userlist'>
                     {filteredUser.length > 0? filteredUser.map(user => (
-                        <UserCard key={user.ID} name={user.Username} email={user.Email} />
+                        <UserCard id={user.id} name={user.Username} email={user.Email} />
                     )) : ( <div className='notfound'><h1>No user found.</h1></div> ) }
                 </div>
             </main>
