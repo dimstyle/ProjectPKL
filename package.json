@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "mock" : "npx prism mock api/openapi.yaml",
-    "dev:frontend": "concurrently \"npm --prefix frontend run dev\" \"npx prism mock api/openapi.yaml\""
+    "dev:frontend": "concurrently \"npm --prefix frontend run vite:dev\" \"npx prism mock api/openapi.yaml\""
   },
   "author": "",
   "license": "ISC",
