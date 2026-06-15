@@ -8,7 +8,7 @@ export default function Navbar({search, setSearch}) {
             <nav>
                 <h1 className="akadub">Akadub</h1>
                 <input type="text" placeholder="Search user" value={search} onChange={(e) => setSearch(e.target.value)}/>
-                <Link className="link" to="/registration">sign up</Link>
+                <Link className="signuplink" to="/registration">sign up</Link>
             </nav>
         </>
     )

@@ -8,7 +8,7 @@ nav {
     padding-right: 30px;
     padding-left: 30px;
     width: 100%;
-    background-image: linear-gradient(to bottom, blue, purple);
+    background-image: linear-gradient(to bottom, blue, violet);
     box-shadow: 0px 0px 5px black;
 }
 
@@ -26,7 +26,7 @@ input {
     font-weight: 900;
 }
 
-.link {
+.signuplink {
     font-size: large;
     font-weight: 900;
     text-decoration: none;
