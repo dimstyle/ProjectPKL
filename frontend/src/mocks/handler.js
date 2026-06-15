@@ -1,17 +1,5 @@
 import { http, HttpResponse } from "msw";
-
-const users = [
-                {id: 1, username: "dummy1", email: "dummy1@gmail.com"},
-                {id: 2, username: "dummy2", email: "dummy2@gmail.com"},
-                {id: 3, username: "dummy3", email: "dummy3@gmail.com"}
-            ]
-
-const userProfile = [
-    {id: 1, username: "dummy1", email: "dummy1@gmail.com"},
-    {id: 2, username: "dummy2", email: "dummy2@gmail.com"},
-    {id: 3, username: "dummy3", email: "dummy3@gmail.com"}
-]
-
+import { users, userProfile} from './userdata'
 
 export const handler = [
     http.get("/api/user/list",()=>{
