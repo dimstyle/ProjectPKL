@@ -58,21 +58,44 @@ paths:
                 items:
                   $ref : "#/components/schemas/ListUsersResponse"
               
-              example:
-                message: "success to fetch users"
-                users:
-                  - ID: 1
-                    Email: dummy1@gmail.com
-                    Username: dummy1
+              # example:
+              #   message: "success to fetch users"
+              #   users:
+              #     - id: 1
+              #       email: dummy1@gmail.com
+              #       username: dummy1
           
-                  - ID: 2
-                    Email: dummy2@gmail.com
-                    Username: dummy2
+              #     - id: 2
+              #       email: dummy2@gmail.com
+              #       username: dummy2
           
-                  - ID: 3
-                    Email: dummy3@gmail.com
-                    Username: dummy3
-
+              #     - id: 3
+              #       email: dummy3@gmail.com
+              #       username: dummy3
+  /api/user/{id}:
+    get:
+      summary: Fetch user data by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: user id 
+          schema:
+            type: integer
+          
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserInfoResponse"
+              # examples:
+              #   user1:
+              #     value:
+              #       id: 1
+              #       username: dummy1
+              #       email: dummy1@gmail.com
 
 components:
 
@@ -87,30 +110,40 @@ components:
     RegistrationRequest:
       type: object
       properties:
-        Username:
+        username:
           type: string
-        Email:
+        email:
           type: string
-        Password: 
+        password: 
           type: string
 
     LoginRequest:
       type: object
       properties:
-        Email: 
+        email: 
           type : string
-        Passsword:
+        passsword:
           type: string
 
 
     GetUserResponse:
       type: object
       properties:
-        ID:
+        id:
           type: integer
-        Email: 
+        email: 
           type: string
-        Username:
+        username:
+          type: string
+      
+    UserInfoResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        email: 
+          type: string
+        username:
           type: string
     
     ListUsersResponse:

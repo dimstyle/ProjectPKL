@@ -11,8 +11,8 @@ function Login(){
         if(!(email.current.value || password.current.value)) return
 
         const loginRequest = {
-            Email: email.current.value,
-            Password: password.current.value
+            email: email.current.value,
+            password: password.current.value
         }
 
         try{

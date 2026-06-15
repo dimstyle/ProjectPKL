@@ -1,6 +1,6 @@
 package dto
 
 type GetUserList struct {
-	Username string
-	Email string
+	Username string `json:"username"`
+	Email string `json:"email"`
 }

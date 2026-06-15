@@ -39,7 +39,7 @@ function Home(){
         const users_before_filtered = users;
         const filtered_user = users_before_filtered.filter( user => (new RegExp(search.toLowerCase()).test(user.Username.toLowerCase())))
         setFilteredUser(filtered_user)
-
+        
     },[search])
 
     
@@ -54,7 +54,7 @@ function Home(){
             <main>
                 <div className='userlist'>
                     {filteredUser.length > 0? filteredUser.map(user => (
-                        <UserCard id={user.ID} name={user.Username} email={user.Email} />
+                        <UserCard id={user.id} name={user.username} email={user.email} />
                     )) : ( <div className='notfound'><h1>No user found.</h1></div> ) }
                 </div>
             </main>
