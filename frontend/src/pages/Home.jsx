@@ -37,7 +37,7 @@ function Home(){
 
     useEffect(()=>{
         const users_before_filtered = users;
-        const filtered_user = users_before_filtered.filter( user => (new RegExp(search.toLowerCase()).test(user.Username.toLowerCase())))
+        const filtered_user = users_before_filtered.filter( user => (new RegExp(search.toLowerCase()).test(user.username.toLowerCase())))
         setFilteredUser(filtered_user)
         
     },[search])

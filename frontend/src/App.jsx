@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import UserProfile from './pages/UserProfile';
 import UserInfo from './components/UserInfo';
 import AccountSettings from './components/AccountSettings'
+import Post from './components/Post'
 
 function App() {
   return(
@@ -15,6 +16,7 @@ function App() {
       <Route path='/user/:userId' element={<UserProfile />} >
         <Route index element={<UserInfo />} />
         <Route path="settings" element={<AccountSettings />}/>
+        <Route path="post" element={<Post />}/>
       </Route>
     </Routes>
   )

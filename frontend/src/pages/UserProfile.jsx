@@ -56,6 +56,9 @@ export default function UserProfile() {
     return(
         <>
             <div className="dashboardbody">
+                <nav className="userprofilenav">
+                    <input type="text" placeholder="Search" />
+                </nav>
                 <div className="sidebar">
                     <div className="userprofile">
                         <img src={profileIcon} alt="profileIcon" width={"100rem"} />
@@ -64,6 +67,7 @@ export default function UserProfile() {
                     <div className="navigation">
                         <Link className="navlink" to={`/user/${userId}`}>User Info</Link>
                         <Link className="navlink" to={`/user/${userId}/settings`}>Settings</Link>
+                        <Link className="navlink" to={`/user/${userId}/post`}>Post</Link>
                     </div>
                     <Link className="logout" to="/">Back</Link>
                 </div>
