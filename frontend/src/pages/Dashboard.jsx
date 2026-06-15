@@ -5,7 +5,8 @@ import "../css/dashboard.css"
 export default function Dashboard() {
     const userData = {
         '1' : { name: 'Hytam', email: 'Hytam@gmail.com', age: '1945', skin: 'black'},
-        '2' : { name: 'Putyh', email: 'Putyh@gmail.com', age: '1899', skin: 'white'}
+        '2' : { name: 'Putyh', email: 'Putyh@gmail.com', age: '1899', skin: 'white'},
+        '3' : { name: 'Abu-abu', email: 'Abu-abu@gmail.com', age: '1511', skin: 'warna-warni'}
     }
     
     const { userId } = useParams()
