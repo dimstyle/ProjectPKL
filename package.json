@@ -4,16 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "dimstyle:030-Mwantap/Akadub.git"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mock" : "npx prism mock api/openapi.yaml",
+    "dev:frontend": "concurrently \"npm --prefix frontend run dev\" \"npx prism mock api/openapi.yaml\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@stoplight/prism-cli": "^5.6.0",
-    "@stoplight/spectral-cli": "^6.16.0"
+    "@stoplight/spectral-cli": "^6.16.0",
+    "concurrently": "^10.0.3"
   }
 }
