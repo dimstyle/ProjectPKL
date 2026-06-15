@@ -6,7 +6,7 @@ SESSION="workspace"
 # GANTI PERINTAH DI SINI
 # =========================
 
-CMD_RIGHT_TOP="docker run --rm --name db_dev_env -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password -e POSTGRES_DB=users -p 5432:5432 -v $(pwd)/var:/var/lib/postgresql:Z postgres:latest"
+CMD_RIGHT_TOP="docker run --rm -u $(id -u):$(id -g) --name db_dev_env -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password -e POSTGRES_DB=users -p 5432:5432 -v $(pwd)/var:/var/lib/postgresql:Z postgres:latest"
 CMD_RIGHT_BOTTOM="air -d"
 
 # Hapus session lama kalau ada

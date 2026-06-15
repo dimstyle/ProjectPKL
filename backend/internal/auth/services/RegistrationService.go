@@ -2,21 +2,23 @@ package services
 
 import (
 	"backend/internal/auth/dto"
-	"backend/internal/auth/models"
-	"backend/internal/auth/repositories"
+	"backend/internal/db"
+	"context"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
-func NewRegistrationService() *RegistrationService{
-	return &RegistrationService{}
+func NewRegistrationService(q *db.Queries) *RegistrationService{
+	return &RegistrationService{
+		repo: q,
+	}
 }
 
 type RegistrationService struct{
-	repo *repositories.AuthRepository
+	repo *db.Queries
 }
 
-func (s *RegistrationService) Registration(user dto.CreateUserRequest) error{
+func (service *RegistrationService) Registration(c context.Context ,user dto.CreateUserRequest) error{
 
 	hashed , err := bcrypt.GenerateFromPassword([]byte(user.Password),14)
 	if(err != nil){
@@ -25,13 +27,13 @@ func (s *RegistrationService) Registration(user dto.CreateUserRequest) error{
 
 	user.Password = string(hashed)
 
-	userModel := models.User{
+	userModel := db.CreateUserDataParams{
 		Username: user.Username,
 		Email: user.Email,
 		Password: user.Password ,
 	}
 	
-	err = s.repo.CreateUserData(userModel)
+	_, err = service.repo.CreateUserData(c, userModel)
 
 	if(err != nil){
 		return err

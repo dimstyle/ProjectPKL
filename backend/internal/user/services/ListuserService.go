@@ -1,19 +1,21 @@
 package services
 
 import (
-	"backend/internal/user/repositories"
-	"backend/internal/user/dto"
+	"backend/internal/db"
+	"context"
 )
 
 
-func NewListuserHandler() *ListuserService{
-	return &ListuserService{}
+func NewListuserHandler(q *db.Queries) *ListuserService{
+	return &ListuserService{
+		repo: q,
+	}
 }
 
 type ListuserService struct {
-	repo *repositories.UserRepository
+	repo *db.Queries
 }
 
-func (s *ListuserService) GetUser() ([]dto.GetUserList, error){
-	return s.repo.GetAllUser()
+func (service *ListuserService) GetUser(ctx context.Context) ([]db.GetAllUserRow, error){
+	return service.repo.GetAllUser(ctx)
 }

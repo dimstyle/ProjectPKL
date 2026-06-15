@@ -2,13 +2,13 @@ package handlers
 
 import(
 	"backend/internal/user/services"
-
+	"backend/internal/db"
 	"github.com/gin-gonic/gin"
 )
 
-func NewListuserHandler() *ListuserHandler{
+func NewListuserHandler(q *db.Queries) *ListuserHandler{
 	return &ListuserHandler{
-		service: services.NewListuserHandler(),
+		service: services.NewListuserHandler(q),
 	}
 }
 
@@ -17,7 +17,10 @@ type ListuserHandler struct {
 }
 
 func (handler *ListuserHandler) Listuser(c *gin.Context){
-	users, err := handler.service.GetUser()
+	ctx := c.Request.Context()
+
+	users, err := handler.service.GetUser(ctx)
+
 
 	if(err != nil){
 		c.JSON(404,gin.H{

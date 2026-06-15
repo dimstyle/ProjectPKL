@@ -1,17 +1,15 @@
 package database
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
 
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
-
-	"backend/internal/auth/models"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func ConnectDB() *gorm.DB{
+func ConnectDB() (*pgxpool.Pool,error){
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		os.Getenv("DB_HOST"),
@@ -21,14 +19,20 @@ func ConnectDB() *gorm.DB{
 		os.Getenv("DB_PORT"),
 	)
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := pgxpool.New(context.Background(),dsn)
 
 	if(err != nil){
-		log.Fatal("failed to connect postgres database")
+		log.Println("failed to connect postgres database")
+		return nil, err
 	}
 
-	db.AutoMigrate(&models.User{})
+	if err := db.Ping(context.Background()); err != nil{
+		log.Println("failed to connect postgres database")
+		return nil, err
+	}
 
-	return db
+	log.Println("database connected")
+
+	return db, nil
 
 }

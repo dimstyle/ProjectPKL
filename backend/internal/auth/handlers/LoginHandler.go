@@ -2,16 +2,17 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-
+	
+	"backend/internal/db"
 	"backend/internal/auth/dto"
 	"backend/internal/auth/services"
 
 	"log"
 )
 
-func NewLoginHandler() *LoginHandler{
+func NewLoginHandler(q *db.Queries) *LoginHandler{
 	return &LoginHandler{
-		service: services.NewLoginService(),
+		service: services.NewLoginService(q),
 	}
 }
 
@@ -30,7 +31,7 @@ func (handler *LoginHandler) Login(c *gin.Context){
 		})
 	}
 	
-	err = handler.service.Login(userLogin)
+	err = handler.service.Login(c, userLogin)
 	if(err!=nil){
 		c.JSON(400, gin.H{
 			"message" : err.Error(),

@@ -1,14 +1,24 @@
 package main
 
 import (
-	"backend/internal/routes"
+	"backend/configs"
 	"backend/internal/database"
+	"backend/internal/routes"
+	"backend/internal/db"
+
+	"log"
 )
 
 func main(){
+	configs.Loadenv()
 
-	database.ConnectDB()
+	dbConn, err := database.ConnectDB()
+	if err != nil{
+		log.Fatal(err)
+	}
+	queries := db.New(dbConn)
 
-	router := routes.SetupRoutes()
+
+	router := routes.SetupRoutes(queries)
 	router.Run()
 }

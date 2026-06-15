@@ -1,27 +1,28 @@
 package services
 
 import (
+	"context"
+
 	"golang.org/x/crypto/bcrypt"
 
 	"backend/internal/auth/dto"
-	"backend/internal/auth/repositories"
-
+	"backend/internal/db"
 )
 
-func NewLoginService() *LoginService{
+func NewLoginService(q *db.Queries) *LoginService{
 	return &LoginService{
-		repo: repositories.AuthRepository{},
+		repo: q,
 	}
 }
 
 type LoginService struct{
-	repo repositories.AuthRepository
+	repo *db.Queries
 }
 
-func (service *LoginService) Login(userLogin dto.LoginUserRequest) error {
+func (service *LoginService) Login(ctx context.Context, userLogin dto.LoginUserRequest) error {
 	email := userLogin.Email
 
-	user, err := service.repo.GetUserWithEmail(email)
+	user, err := service.repo.GetUserWithEmail(ctx, email)
 
 	if (err != nil){
 		return err

@@ -3,13 +3,13 @@ package handlers
 import (
 	"backend/internal/auth/dto"
 	"backend/internal/auth/services"
-	
+	"backend/internal/db"
 	"github.com/gin-gonic/gin"
 )
 
-func NewRegistrationHandler() *RegistrationHandler{
+func NewRegistrationHandler(q *db.Queries) *RegistrationHandler{
 	return &RegistrationHandler{
-		service: services.NewRegistrationService(),
+		service: services.NewRegistrationService(q),
 	}
 }
 
@@ -30,7 +30,7 @@ func (handler *RegistrationHandler) Registration(c *gin.Context){
 		return
 	}
 
-	err = handler.service.Registration(userData)
+	err = handler.service.Registration(c, userData)
 
 	if(err != nil){
 		c.JSON(500,gin.H{
