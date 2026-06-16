@@ -1,4 +1,4 @@
-package user
+package routes
 
 import (
 	"backend/internal/user/handlers"

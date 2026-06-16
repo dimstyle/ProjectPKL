@@ -1,9 +1,10 @@
 package routes
 
 import (
-	"backend/internal/auth"
+	authroutes "backend/internal/auth/routes"
+	userroutes "backend/internal/user/routes"
+	// "backend/internal/middleware"
 	"backend/internal/db"
-	"backend/internal/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,11 +25,15 @@ func rootRoutes(r *gin.Engine){
 
 func SetupRoutes(q *db.Queries) *gin.Engine{
 	r := gin.Default()
+	r.SetTrustedProxies(nil)
+
+	// middleware.SetupMiddleware(r)
+
 	api := r.Group("/api")
 	rootRoutes(r)
 
-	auth.AuthRoutes(api, q)
-	user.UserRoutes(api, q)
+	authroutes.AuthRoutes(api, q)
+	userroutes.UserRoutes(api, q)
 	
 	return r
 }

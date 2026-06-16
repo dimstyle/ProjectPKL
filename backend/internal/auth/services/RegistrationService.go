@@ -4,6 +4,7 @@ import (
 	"backend/internal/auth/dto"
 	"backend/internal/db"
 	"context"
+	"log"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -22,6 +23,7 @@ func (service *RegistrationService) Registration(c context.Context ,user dto.Cre
 
 	hashed , err := bcrypt.GenerateFromPassword([]byte(user.Password),14)
 	if(err != nil){
+		log.Println(err.Error())
 		return err
 	}
 
@@ -33,11 +35,23 @@ func (service *RegistrationService) Registration(c context.Context ,user dto.Cre
 		Password: user.Password ,
 	}
 	
-	_, err = service.repo.CreateUserData(c, userModel)
-
+	userData, err := service.repo.CreateUserData(c, userModel)
 	if(err != nil){
+		log.Println(err.Error())
 		return err
 	}
+
+
+	// Generate Token Field
+	_, err = service.repo.CreateRefreshToken(c, db.CreateRefreshTokenParams{
+		UserID: userData.ID,
+		Token: "",
+	})
+	if err != nil{
+		log.Println(err.Error())
+		return err
+	}
+
 
 	return nil
 }

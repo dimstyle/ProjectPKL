@@ -1,4 +1,4 @@
-package auth
+package routes
 
 import (
 	"backend/internal/auth/handlers"

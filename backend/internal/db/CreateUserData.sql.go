@@ -15,7 +15,7 @@ username,
 email, 
 password) 
 VALUES ($1, $2, $3)
-RETURNING id, username, email, password
+RETURNING id, username, email, password, created_at
 `
 
 type CreateUserDataParams struct {
@@ -32,6 +32,7 @@ func (q *Queries) CreateUserData(ctx context.Context, arg CreateUserDataParams) 
 		&i.Username,
 		&i.Email,
 		&i.Password,
+		&i.CreatedAt,
 	)
 	return i, err
 }

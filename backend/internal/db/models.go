@@ -4,9 +4,28 @@
 
 package db
 
+import (
+	"github.com/jackc/pgx/v5/pgtype"
+)
+
+type RefreshToken struct {
+	ID     int32
+	UserID int32
+	Token  string
+}
+
+type TextPost struct {
+	ID        int32
+	UserID    int32
+	Title     string
+	Content   string
+	CreatedAt pgtype.Timestamp
+}
+
 type User struct {
-	ID       int32
-	Username string
-	Email    string
-	Password string
+	ID        int32
+	Username  string
+	Email     string
+	Password  string
+	CreatedAt pgtype.Timestamp
 }
