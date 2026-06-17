@@ -3,6 +3,7 @@ package services
 import (
 	"backend/internal/db"
 	"context"
+	"log"
 )
 
 
@@ -17,5 +18,11 @@ type ListuserService struct {
 }
 
 func (service *ListuserService) GetUser(ctx context.Context) ([]db.GetAllUserRow, error){
-	return service.repo.GetAllUser(ctx)
+	users, err := service.repo.GetAllUser(ctx)
+	if err != nil{
+		log.Println(err.Error())
+		return []db.GetAllUserRow{}, err
+	}
+	
+	return users, nil
 }

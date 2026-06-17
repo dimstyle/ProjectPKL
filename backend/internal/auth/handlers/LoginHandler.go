@@ -25,8 +25,8 @@ func (handler *LoginHandler) Login(c *gin.Context){
 
 	err := c.ShouldBindJSON(&userLogin)
 	if err!=nil {
-		c.JSON(500,gin.H{
-			"message" : "internal server error",
+		c.JSON(400,gin.H{
+			"message" : "bad request",
 		})
 	}
 	

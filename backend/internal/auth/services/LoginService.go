@@ -2,9 +2,6 @@ package services
 
 import (
 	"context"
-	"fmt"
-	"log"
-
 	"golang.org/x/crypto/bcrypt"
 
 	"backend/internal/auth/dto"
@@ -26,7 +23,7 @@ type LoginService struct{
 func (service *LoginService) Login(ctx context.Context, userLogin dto.LoginUserRequest) (jwt.JWTToken, error) {
 	email := userLogin.Email
 
-	user, err := service.repo.GetUserWithEmail(ctx, email)
+	user, err := service.repo.GetUserPasswordWithEmail(ctx, email)
 
 	if err != nil{
 		return jwt.JWTToken{}, err
@@ -36,7 +33,6 @@ func (service *LoginService) Login(ctx context.Context, userLogin dto.LoginUserR
 	requestPassword := userLogin.Password
 
 	if !checkPassword(hashedPassword, requestPassword){
-		fmt.Println("salah")
 		return jwt.JWTToken{
 			AccessToken: "",
 			RefreshToken: "",
@@ -44,37 +40,16 @@ func (service *LoginService) Login(ctx context.Context, userLogin dto.LoginUserR
 		}, nil
 	}
 
-
-	// generate accesstoken
-	AccessToken, err := jwt.GenerateAccessToken(user.ID,"user")
+	jwttoken, err := GenerateToken(ctx, service.repo, user.ID)
 	if err != nil{
-		log.Println(err.Error())
 		return jwt.JWTToken{}, err
 	}
-
-	// generate refresh token
-	RefreshToken, err := jwt.GenerateRefreshToken(user.ID, "user")
-	if err != nil{
-		log.Println(err.Error())
-		return jwt.JWTToken{}, err
-	}
-
-	_, err = service.repo.SetRefreshToken(ctx, db.SetRefreshTokenParams{
-		Token: RefreshToken,
-		UserID: user.ID,
-	})
-	if err != nil {
-		log.Println(err.Error())
-		return jwt.JWTToken{}, err
-	}
-
 
 	return jwt.JWTToken{
-		AccessToken: AccessToken,
-		RefreshToken: RefreshToken,
+		AccessToken: jwttoken.AccessToken,
+		RefreshToken: jwttoken.RefreshToken,
 		Authorized: true,
 	}, nil
-	
 }
 
 

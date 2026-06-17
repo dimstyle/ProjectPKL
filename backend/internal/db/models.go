@@ -5,7 +5,7 @@
 package db
 
 import (
-	"github.com/jackc/pgx/v5/pgtype"
+	"time"
 )
 
 type RefreshToken struct {
@@ -19,7 +19,7 @@ type TextPost struct {
 	UserID    int32
 	Title     string
 	Content   string
-	CreatedAt pgtype.Timestamp
+	CreatedAt time.Time
 }
 
 type User struct {
@@ -27,5 +27,5 @@ type User struct {
 	Username  string
 	Email     string
 	Password  string
-	CreatedAt pgtype.Timestamp
+	CreatedAt time.Time
 }

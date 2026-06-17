@@ -22,19 +22,18 @@ func (handler *RegistrationHandler) Registration(c *gin.Context){
 	var err error
 
 	err = c.ShouldBindJSON(&userData)
-
-	if(err != nil){
+	if err != nil{
 		c.JSON(400,gin.H{
-			"message" : err.Error(),
+			"message" : "bad request",
 		})
 		return
 	}
 
 	err = handler.service.Registration(c, userData)
 
-	if(err != nil){
+	if err != nil {
 		c.JSON(500,gin.H{
-			"message" : err.Error(),
+			"message" : "internal server error",
 		})
 		return
 	}

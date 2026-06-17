@@ -9,3 +9,18 @@ sql:
         package: "db"
         out: "internal/db"
         sql_package: "pgx/v5"
+
+        overrides:
+          # timestamp -> Go time.Time
+          - db_type: "timestamp"
+            go_type: "time.Time"
+
+          # timestamptz -> Go time.Time (IMPORTANT)
+          - db_type: "timestamptz"
+            go_type: "time.Time"
+          
+          - db_type: "pg_catalog.timestamp"
+            go_type: "time.Time"
+
+          - db_type: "pg_catalog.timestamptz"
+            go_type: "time.Time"
