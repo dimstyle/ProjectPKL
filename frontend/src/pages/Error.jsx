@@ -1,3 +1,6 @@
+import React from "react"
+import "../css/er.css"
+
 function Error({errormessage}){
     return(
         <div className="er-ctn">
