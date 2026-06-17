@@ -19,7 +19,7 @@ export default function UserProfile() {
     useEffect(()=>{
         (async ()=>{
             try{
-                const response = await fetch(`/api/user/${userId}`)
+                const response = await fetch(`/api/users/profiles/${userId}`)
 
                 if(!response.ok){
                     throw new Error("er")
