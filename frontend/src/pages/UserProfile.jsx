@@ -1,6 +1,6 @@
 import { useParams, Link, Outlet } from "react-router-dom";
 import profileIcon from "../assets/download-removebg-preview.png"
-import "../css/dashboard.css"
+import "../css/userprofile.css"
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
 import Error from "./Error";
@@ -56,9 +56,6 @@ export default function UserProfile() {
     return(
         <>
             <div className="dashboardbody">
-                <nav className="userprofilenav">
-                    <input type="text" placeholder="Search" />
-                </nav>
                 <div className="sidebar">
                     <div className="userprofile">
                         <img src={profileIcon} alt="profileIcon" width={"100rem"} />
