@@ -1,5 +1,39 @@
-.posts {
+.post {
     margin-top: 7rem;
     margin-left: 12rem;
     color: white;
+}
+
+.datesearch {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+}
+
+.postresults {
+    color: lightblue;
+}
+
+.filtered {
+    background-color: blueviolet;
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+}
+
+.notfoundpost {
+    font-size: larger;
+    color: lightcoral;
+}
+
+.posts {
+    text-align: center;
+    padding: 1rem;
+    height: 9rem;
+    width: 80rem;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    border-radius: 1rem;
+    background-image: linear-gradient(to right, blue, violet);
 }
