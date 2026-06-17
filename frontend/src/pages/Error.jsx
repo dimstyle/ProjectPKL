@@ -1,8 +1,8 @@
 function Error({errormessage}){
     return(
-        <>
-            <h1>{errormessage || "error"}</h1>
-        </>
+        <div className="er-ctn">
+            <h1 className="er">{errormessage || "error"}</h1>
+        </div>
     )
 }
 

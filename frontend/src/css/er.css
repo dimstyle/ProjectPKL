@@ -1,0 +1,12 @@
+.er-ctn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #333, #555);
+    padding: 20px;
+}
+
+.er{
+    color: white;
+}

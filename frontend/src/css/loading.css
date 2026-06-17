@@ -1,0 +1,35 @@
+.load-ctn{
+    display: flex;
+    background: linear-gradient( to bottom, blue, purple );
+    min-height: 100vh;
+    position: fixed;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+.load-up{
+    text-align: center;
+    padding: 2rem;
+}
+
+.load{
+    color: white;
+    font-style: italic;
+    font-size: 50px;
+}
+
+.subLoad{
+    color: rgb(29, 195, 189);   
+    font-size: 30px;
+}
+
+.subLoad:after {
+  content: '';
+  animation: dots 1.5s steps(4, end) infinite;
+}
+
