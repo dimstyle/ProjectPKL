@@ -6,11 +6,13 @@ import UserProfile from './pages/UserProfile';
 import UserInfo from './components/UserInfo';
 import AccountSettings from './components/AccountSettings'
 import Post from './components/Post'
+import GeneralPosts from './pages/GeneralPosts';
 
 function App() {
   return(
     <Routes>
       <Route path='/' element={<Home />}/>
+      <Route path='/posts' element={<GeneralPosts />} />
       <Route path='/registration' element={<Registration />}/>
       <Route path='/login' element={<Login />} />
       <Route path='/user/:userId' element={<UserProfile />} >

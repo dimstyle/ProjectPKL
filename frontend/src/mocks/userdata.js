@@ -11,9 +11,36 @@ const userProfile = [
 ]
 
 const posts = [
-    {user_id: 1, title: "lorem ipsum", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",created_at: "2026-06-15T10:23:45.123Z"},
-    {user_id: 2, title: "lorem ipsum", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",created_at: "2026-06-14T14:52:30.456Z"},
-    {user_id: 3, title: "lorem ipsum", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",created_at: "2026-06-12T08:15:22.789Z"}
+    {
+        user_id: 1,
+        title: "Post within the last hour",
+        content: "This post was created less than one hour ago and should appear only in the last_hour range.",
+        created_at: "2026-06-17T13:45:00.000Z"
+    },
+    {
+        user_id: 2,
+        title: "Post within the last 24 hours",
+        content: "This post was created earlier today and should appear in last_24h and last_week ranges.",
+        created_at: "2026-06-17T05:30:00.000Z"
+    },
+    {
+        user_id: 3,
+        title: "Post from two days ago",
+        content: "This post is older than 24 hours but still within the last week.",
+        created_at: "2026-06-15T11:20:00.000Z"
+    },
+    {
+        user_id: 1,
+        title: "Post from five days ago",
+        content: "This post is within the last week and will show up only for last_week.",
+        created_at: "2026-06-12T09:10:00.000Z"
+    },
+    {
+        user_id: 2,
+        title: "Older post beyond last week",
+        content: "This post is older than seven days and should not show in any current filter.",
+        created_at: "2026-06-08T14:00:00.000Z"
+    }
 ]
 
 
