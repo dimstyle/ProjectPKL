@@ -10,4 +10,11 @@ const userProfile = [
     {id: 3, username: "dummy3", email: "dummy3@gmail.com", age:1511 , skin: "dimas"}
 ]
 
-export {users, userProfile}
+const posts = [
+    {user_id: 1, title: "lorem ipsum", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",created_at: "2026-06-15T10:23:45.123Z"},
+    {user_id: 2, title: "lorem ipsum", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",created_at: "2026-06-14T14:52:30.456Z"},
+    {user_id: 3, title: "lorem ipsum", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",created_at: "2026-06-12T08:15:22.789Z"}
+]
+
+
+export {users, userProfile, posts}

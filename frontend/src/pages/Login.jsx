@@ -34,10 +34,10 @@ function Login(){
     }
 
     return(
-        <div class="loginbody">
-            <div class="logincard">
+        <div className="loginbody">
+            <div className="logincard">
                 <h1 className='h1login'>Login</h1>
-                <div class="inputs">
+                <div className="inputs">
                     <input ref={email} type="text" placeholder="Email"/>
                     <input ref={password} type="password" placeholder="Password" />
                     <button onClick={loginAction}>Login</button>

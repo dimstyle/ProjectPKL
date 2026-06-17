@@ -17,7 +17,7 @@ function Home(){
         (async()=>{
             setError("")
             try{
-                const response = await fetch("/api/user/list")  
+                const response = await fetch("/api/users/profiles")  
 
                 if(!response.ok){
                     throw new Error("users not found")
