@@ -4,6 +4,7 @@ import (
 	"backend/internal/auth/handlers"
 	"backend/internal/db"
 	"github.com/gin-gonic/gin"
+	"backend/internal/middleware"
 )
 
 func AuthRoutes(r *gin.RouterGroup, q *db.Queries){
@@ -15,4 +16,5 @@ func AuthRoutes(r *gin.RouterGroup, q *db.Queries){
 	// Regist Login Routes
 	auth.POST("/login",handlers.NewLoginHandler(q).Login)
 
+	auth.GET("/refresh_token",middleware.VerifiedRefreshTokenMiddleware(),handlers.NewRefreshTokenHandler(q).RecreateToken )
 }

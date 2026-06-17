@@ -1,5 +1,3 @@
 backend/var/
 backend/tmp/
-backend/scripts/
 backend/frontend/
-backend/.env

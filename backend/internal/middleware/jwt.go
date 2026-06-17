@@ -21,7 +21,7 @@ func VerifiedAccessTokenhMiddleware() gin.HandlerFunc{
 		
 		AccessToken := strings.TrimPrefix(Autheader,"Bearer ")
 		
-		claims, err := jwt.ValidateToken(AccessToken)
+		claims, err := jwt.ValidateTokenWithClaim(AccessToken)
 		if err != nil{
 			c.AbortWithStatusJSON(401,gin.H{
 				"message" : "invalid token",
@@ -36,6 +36,22 @@ func VerifiedAccessTokenhMiddleware() gin.HandlerFunc{
 
 func VerifiedRefreshTokenMiddleware() gin.HandlerFunc{
 	return func(c *gin.Context){
-		
+		refreshToken, err := c.Cookie("refresh_token")
+		if refreshToken == "" || err != nil {
+			c.AbortWithStatusJSON(401,gin.H{
+				"message" : "missing token",
+			})
+			return
+		}
+
+		if !jwt.ValidateToken(refreshToken){
+			c.AbortWithStatusJSON(401,gin.H{
+				"message" : "invalid token",
+			}) 
+			return 
+		}
+
+		c.Set("refresh_token", refreshToken)
+		c.Next()
 	}
 }
