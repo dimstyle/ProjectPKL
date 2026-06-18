@@ -26,23 +26,25 @@ function Dashboard(){
                 if(!response.ok){
                     throw new Error("users not found")
                 }
-
-                const userdata = await response.json();
-                setUser(userdata.users)
+                
+                const userdata = await response.json()
+                console.log(userdata)
+                setUser(userdata.user)
             }catch(error){
                 setError(error.message)
             }finally{
                 setLoading(false)
             }
         })()
-    }, [accessToken])
+    }, [])
 
     if(loading) return <Loading />
 
-    if(error) return <Error />
+    if(error) return <Error errormessage="error"/>
     return(
         <>
-            <h1>haha</h1>
+            <h1>{user.username}</h1>
+            <h1>{user.email     }</h1>
         </>
     )
 }

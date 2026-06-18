@@ -94,20 +94,17 @@ export const handler = [
 
         const id = Number(match[1])
         const user = getById(id)
-        const profile = userProfile[id - 1]
 
-        if (!user || !profile) {
+        if (!user) {
             return HttpResponse.json({ message: "Invalid token user" }, { status: 401 })
         }
 
         return HttpResponse.json({
             message: "success",
-            profile: {
-                id: profile.id,
-                username: profile.username,
-                email: profile.email,
-                age: profile.age,
-                skin: profile.skin
+            user: {
+                id: user.id,
+                username: user.username,
+                email: user.email
             }
         })
     }),

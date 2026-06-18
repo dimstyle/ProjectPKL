@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import '../css/registration.css'
 import { useRef } from 'react'
 
@@ -6,6 +6,7 @@ function Registration(){
     const username = useRef()
     const email = useRef()
     const password = useRef()
+    const navigate = useNavigate()
 
     const signupAction = async ()=>{
         if (!(username.current || email.current || password.current)) return
@@ -32,6 +33,7 @@ function Registration(){
             }
 
             alert("succes to create user")
+            navigate("/login")
         }catch(error){
             console.log(error)
         }
