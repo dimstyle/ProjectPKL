@@ -4,6 +4,7 @@ import Error from './Error';
 import Loading from './Loading';
 import { useEffect, useState} from "react";
 import "../App.css"
+import { useAuthStore } from '../stores/authStore';
 
 function Home(){
 

@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
 import '../css/login.css'
 import { useRef } from 'react'
+import { useAuthStore } from '../stores/authStore'
+import { User } from 'lucide-react'
+
 
 function Login(){
     const email = useRef()
@@ -15,6 +18,7 @@ function Login(){
             password: password.current.value
         }
 
+   
         try{
             const response = await fetch("/api/auth/login",{
                 method : "POST",
@@ -26,8 +30,12 @@ function Login(){
             if (!response.ok) {
                 throw new Error(`Gagal! Status: ${response.status}`);
             }
+            
+            const token = response.headers.get("Authorization")
 
-             alert("succes to login")
+            useAuthStore.getState().setAccessToken(token)
+
+            alert("succes to login")
         }catch(error){
             console.log(error)
         }

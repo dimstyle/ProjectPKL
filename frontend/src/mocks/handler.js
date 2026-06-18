@@ -1,5 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { users, userProfile, posts} from './userdata'
+import { addUser, findByEmailAndPassword } from './authStorage'
 
 export const handler = [
     http.get("/api/users/profiles",()=>{
@@ -48,15 +49,66 @@ export const handler = [
         })
     }),
 
-    // auth
-    http.post("/api/auth/registration", () => {
+    // get single user from access token
+    http.get("/api/user/post", ({ request }) => {
+        const auth = request.headers.get("Authorization") || ""
+
+        if (!auth) {
+            return HttpResponse.json({ message: "Authorization header missing" }, { status: 401 })
+        }
+
+        const match = auth.match(/^access_token_(\d+)$/)
+        if (!match) {
+            return HttpResponse.json({ message: "Invalid token format" }, { status: 401 })
+        }
+
+        const id = Number(match[1])
+        const user = users.find(u => u.id === id)
+
+        if (!user) {
+            return HttpResponse.json({ message: "Invalid token user" }, { status: 401 })
+        }
+
         return HttpResponse.json({
-            message : "success to create user"
-        }, {status: 201})
-    }),
-    http.post("/api/auth/login", () => {
-        return HttpResponse.json({
-            message : "success to login"
+            message: "success",
+            user: {
+                username: user.username,
+                email: user.email,
+                user_id: user.id
+            }
         })
+    }),
+
+    // auth
+    http.post("/api/auth/registration", async ({ request }) => {
+        const body = await request.json().catch(() => ({}))
+        const { email, password, username } = body
+
+        if (!email || !password) {
+            return HttpResponse.json({ message: "email and password required" }, { status: 400 })
+        }
+
+        const user = addUser({ email, password, username })
+        if (!user) {
+            return HttpResponse.json({ message: "email already registered" }, { status: 409 })
+        }
+
+        return HttpResponse.json({ message: "success to create user", user: { id: user.id, email: user.email, username: user.username } }, { status: 201 })
+    }),
+
+    http.post("/api/auth/login", async ({ request }) => {
+        const body = await request.json().catch(() => ({}))
+        const { email, password } = body
+
+        if (!email || !password) {
+            return HttpResponse.json({ message: "email and password required" }, { status: 400 })
+        }
+
+        const user = findByEmailAndPassword(email, password)
+        if (!user) {
+            return HttpResponse.json({ message: "invalid credentials" }, { status: 401 })
+        }
+
+        return HttpResponse.json({ message: "success to login" }, { headers: { Authorization: `access_token_${user.id}` } })
     })
 ]

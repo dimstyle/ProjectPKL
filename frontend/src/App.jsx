@@ -7,10 +7,12 @@ import UserInfo from './components/UserInfo';
 import AccountSettings from './components/AccountSettings'
 import Post from './components/Post'
 import GeneralPosts from './pages/GeneralPosts';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return(
     <Routes>
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path='/' element={<Home />}/>
       <Route path='/posts' element={<GeneralPosts />} />
       <Route path='/registration' element={<Registration />}/>
