@@ -26,7 +26,7 @@ function Home(){
 
                 const usersdata = await response.json(); //list of users
                
-                setFilteredUser(usersdata.users)
+                setFilteredUser(usersdata.users)        
                 setUsers(usersdata.users)
             }catch(error){
                 setError(error.message) 

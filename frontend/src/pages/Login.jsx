@@ -8,6 +8,7 @@ import { User } from 'lucide-react'
 function Login(){
     const email = useRef()
     const password = useRef()
+    const { setAccessToken, accessToken } = useAuthStore()
 
     const loginAction = async ()=>{
         if(!(email.current || password.current)) return
@@ -32,10 +33,11 @@ function Login(){
             }
             
             const token = response.headers.get("Authorization")
-
-            useAuthStore.getState().setAccessToken(token)
+            setAccessToken(token)
+            console.log("Access Token:", token)
 
             alert("succes to login")
+            window.location.href = "/dashboard"
         }catch(error){
             console.log(error)
         }
@@ -49,6 +51,7 @@ function Login(){
                     <input ref={email} type="text" placeholder="Email"/>
                     <input ref={password} type="password" placeholder="Password" />
                     <button onClick={loginAction}>Login</button>
+                    <h1>{useAuthStore.getState().accessToken}</h1>
                     <div>
                         <p>Didn't have an account?</p>
                         <Link to="/registration">Create an account </Link>

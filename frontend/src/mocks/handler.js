@@ -1,12 +1,12 @@
 import { http, HttpResponse } from "msw";
-import { users, userProfile, posts} from './userdata'
-import { addUser, findByEmailAndPassword } from './authStorage'
+import { userProfile, posts} from './userdata'
+import { registeredUsers, addUser, findByEmailAndPassword, getById } from './authStorage'
 
 export const handler = [
     http.get("/api/users/profiles",()=>{
         return HttpResponse.json({
             message : "success to fetch user",
-            users: users
+            users: registeredUsers.map(u => ({ id: u.id, username: u.username, email: u.email }))
         })
     }),
     
@@ -63,7 +63,7 @@ export const handler = [
         }
 
         const id = Number(match[1])
-        const user = users.find(u => u.id === id)
+        const user = getById(id)
 
         if (!user) {
             return HttpResponse.json({ message: "Invalid token user" }, { status: 401 })
@@ -75,6 +75,39 @@ export const handler = [
                 username: user.username,
                 email: user.email,
                 user_id: user.id
+            }
+        })
+    }),
+
+    // get user profile from access token
+    http.get("/api/user/profile", ({ request }) => {
+        const auth = request.headers.get("Authorization") || ""
+
+        if (!auth) {
+            return HttpResponse.json({ message: "Authorization header missing" }, { status: 401 })
+        }
+
+        const match = auth.match(/^access_token_(\d+)$/)
+        if (!match) {
+            return HttpResponse.json({ message: "Invalid token format" }, { status: 401 })
+        }
+
+        const id = Number(match[1])
+        const user = getById(id)
+        const profile = userProfile[id - 1]
+
+        if (!user || !profile) {
+            return HttpResponse.json({ message: "Invalid token user" }, { status: 401 })
+        }
+
+        return HttpResponse.json({
+            message: "success",
+            profile: {
+                id: profile.id,
+                username: profile.username,
+                email: profile.email,
+                age: profile.age,
+                skin: profile.skin
             }
         })
     }),
