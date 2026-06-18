@@ -189,9 +189,8 @@ components:
           type: string
         title:
           type: string
-        created_at:
+        username:
           type: string
-          format: date-time
 
     ListPostsResponse:
       type: object
