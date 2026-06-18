@@ -1,9 +1,12 @@
 package handlers
 
 import (
-	"github.com/gin-gonic/gin"
 	"backend/internal/db"
 	"backend/internal/user/services"
+	"backend/pkg/jwt"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func NewUserprofileHandler(q *db.Queries) *UserprofileHandler{
@@ -19,16 +22,28 @@ type UserprofileHandler struct{
 func (handler *UserprofileHandler) GetUserProfile(c *gin.Context){
 	ctx := c.Request.Context()
 
-	UserID := c.GetInt32("user_id")
+	tokenobj, exists := c.Get("jwt_claims")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{
+		"message" : "internal server error",
+		})
+	}
 
-	user, err := handler.service.GetUserProfile(ctx, UserID)
+	JwtClaims, ok := tokenobj.(*jwt.Claims)
+	if !ok{
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message" : "internal server error",
+		})
+	}
+
+	user, err := handler.service.GetUserProfile(ctx, JwtClaims.UserID)
 	if err != nil{
-		c.JSON(404, gin.H{
+		c.JSON(http.StatusNotFound, gin.H{
 			"message" : "user not found",
 		})
 	}
 
-	c.JSON(200,gin.H{
+	c.JSON(http.StatusOK,gin.H{
 		"message" : "user found",
 		"user" : user,
 	})

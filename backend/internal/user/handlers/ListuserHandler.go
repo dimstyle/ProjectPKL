@@ -1,8 +1,10 @@
 package handlers
 
-import(
-	"backend/internal/user/services"
+import (
 	"backend/internal/db"
+	"backend/internal/user/services"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,7 +25,7 @@ func (handler *ListuserHandler) Listuser(c *gin.Context){
 
 
 	if(err != nil){
-		c.JSON(404,gin.H{
+		c.JSON(http.StatusNotFound,gin.H{
 			"message" : "user not found",
 			"users"	: nil,
 		})
@@ -31,7 +33,7 @@ func (handler *ListuserHandler) Listuser(c *gin.Context){
 	}
 
 
-	c.JSON(200,gin.H{
+	c.JSON(http.StatusOK,gin.H{
 		"message" : "users found",
 		"users" : users,
 	})

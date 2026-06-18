@@ -9,23 +9,24 @@ import (
 )
 
 type RefreshToken struct {
-	ID     int32
-	UserID int32
-	Token  string
+	ID     int32  `json:"id"`
+	UserID int32  `json:"user_id"`
+	Token  string `json:"token"`
 }
 
 type TextPost struct {
-	ID        int32
-	UserID    int32
-	Title     string
-	Content   string
-	CreatedAt time.Time
+	ID        int32     `json:"id"`
+	UserID    int32     `json:"user_id"`
+	Title     string    `json:"title"`
+	Content   string    `json:"content"`
+	Username  string    `json:"username"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 type User struct {
-	ID        int32
-	Username  string
-	Email     string
-	Password  string
-	CreatedAt time.Time
+	ID        int32     `json:"id"`
+	Username  string    `json:"username"`
+	Email     string    `json:"email"`
+	Password  string    `json:"password"`
+	CreatedAt time.Time `json:"created_at"`
 }

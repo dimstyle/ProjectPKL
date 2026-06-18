@@ -37,11 +37,11 @@ func timeParse(time_range string) (time.Time, time.Time){
 	now := time.Now().UTC()
 
 	switch time_range{
-	case "last_hour":
+	case "from_last_hour":
 		return now.Add(-1 * time.Hour) , now
-	case "last_24h":
+	case "from_last_24h":
 		return now.Add(-24 * time.Hour), now
-	case "last_week":
+	case "from_last_week":
 		return now.Add(-7 * 24 * time.Hour), now
 	
 	default:

@@ -11,6 +11,7 @@ CREATE TABLE text_posts(
     user_id INT NOT NULL,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
+    username TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

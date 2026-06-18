@@ -16,8 +16,8 @@ WHERE email = $1
 `
 
 type GetUserPasswordWithEmailRow struct {
-	ID       int32
-	Password string
+	ID       int32  `json:"id"`
+	Password string `json:"password"`
 }
 
 func (q *Queries) GetUserPasswordWithEmail(ctx context.Context, email string) (GetUserPasswordWithEmailRow, error) {

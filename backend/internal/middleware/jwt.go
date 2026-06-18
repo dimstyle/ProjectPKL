@@ -1,8 +1,9 @@
 package middleware
 
 import (
-	"strings"
 	"backend/pkg/jwt"
+	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +14,7 @@ func VerifiedAccessTokenhMiddleware() gin.HandlerFunc{
 
 		
 		if Autheader == ""{
-			c.AbortWithStatusJSON(401, gin.H{
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"message" : "missing token",
 			})
 			return
@@ -23,13 +24,13 @@ func VerifiedAccessTokenhMiddleware() gin.HandlerFunc{
 		
 		claims, err := jwt.ValidateTokenWithClaim(AccessToken)
 		if err != nil{
-			c.AbortWithStatusJSON(401,gin.H{
+			c.AbortWithStatusJSON(http.StatusUnauthorized,gin.H{
 				"message" : "invalid token",
 			}) 
 			return 
 		}
 
-		c.Set("user_id",claims.UserID)
+		c.Set("jwt_claims",claims)
 		c.Next()
 	}
 }
@@ -38,14 +39,14 @@ func VerifiedRefreshTokenMiddleware() gin.HandlerFunc{
 	return func(c *gin.Context){
 		refreshToken, err := c.Cookie("refresh_token")
 		if refreshToken == "" || err != nil {
-			c.AbortWithStatusJSON(401,gin.H{
+			c.AbortWithStatusJSON(http.StatusUnauthorized,gin.H{
 				"message" : "missing token",
 			})
 			return
 		}
 
 		if !jwt.ValidateToken(refreshToken){
-			c.AbortWithStatusJSON(401,gin.H{
+			c.AbortWithStatusJSON(http.StatusUnauthorized,gin.H{
 				"message" : "invalid token",
 			}) 
 			return 

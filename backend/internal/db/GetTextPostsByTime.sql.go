@@ -11,21 +11,25 @@ import (
 )
 
 const getTextPostsByTime = `-- name: GetTextPostsByTime :many
-SELECT user_id, title, content
+SELECT 
+user_id, -- Will generate ` + "`" + `json:"user_id"` + "`" + `
+title, -- Will generate ` + "`" + `json:"title"` + "`" + `
+content -- Will generate ` + "`" + `json:"content"` + "`" + `
+username -- Will generate ` + "`" + `json:"username"` + "`" + `
 FROM text_posts
 WHERE created_at BETWEEN $1
                     AND $2
 `
 
 type GetTextPostsByTimeParams struct {
-	StartTime time.Time
-	EndTime   time.Time
+	StartTime time.Time `json:"start_time"`
+	EndTime   time.Time `json:"end_time"`
 }
 
 type GetTextPostsByTimeRow struct {
-	UserID  int32
-	Title   string
-	Content string
+	UserID   int32  `json:"user_id"`
+	Title    string `json:"title"`
+	Username string `json:"username"`
 }
 
 func (q *Queries) GetTextPostsByTime(ctx context.Context, arg GetTextPostsByTimeParams) ([]GetTextPostsByTimeRow, error) {
@@ -37,7 +41,7 @@ func (q *Queries) GetTextPostsByTime(ctx context.Context, arg GetTextPostsByTime
 	var items []GetTextPostsByTimeRow
 	for rows.Next() {
 		var i GetTextPostsByTimeRow
-		if err := rows.Scan(&i.UserID, &i.Title, &i.Content); err != nil {
+		if err := rows.Scan(&i.UserID, &i.Title, &i.Username); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

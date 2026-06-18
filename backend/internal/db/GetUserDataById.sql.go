@@ -17,10 +17,10 @@ WHERE id = $1
 `
 
 type GetUserDataByIdRow struct {
-	ID        int32
-	Username  string
-	Email     string
-	CreatedAt time.Time
+	ID        int32     `json:"id"`
+	Username  string    `json:"username"`
+	Email     string    `json:"email"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 func (q *Queries) GetUserDataById(ctx context.Context, id int32) (GetUserDataByIdRow, error) {

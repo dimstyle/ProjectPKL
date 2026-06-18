@@ -1,0 +1,1 @@
+ALTER TABLE text_posts DROP COLUMN username;

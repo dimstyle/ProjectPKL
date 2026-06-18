@@ -15,9 +15,9 @@ FROM users
 `
 
 type GetAllUserRow struct {
-	ID       int32
-	Username string
-	Email    string
+	ID       int32  `json:"id"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
 }
 
 func (q *Queries) GetAllUser(ctx context.Context) ([]GetAllUserRow, error) {

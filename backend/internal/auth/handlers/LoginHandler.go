@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -25,21 +26,22 @@ func (handler *LoginHandler) Login(c *gin.Context){
 
 	err := c.ShouldBindJSON(&userLogin)
 	if err!=nil {
-		c.JSON(400,gin.H{
+		c.JSON(http.StatusBadRequest,gin.H{
 			"message" : "bad request",
 		})
+		return
 	}
 	
 	token, err := handler.service.Login(c, userLogin)
 	if err != nil {
-		c.JSON(500, gin.H{
+		c.JSON(http.StatusInternalServerError, gin.H{
 			"message" : "internal server error",
 		})
 		return
 	}
 
 	if !token.Authorized {
-		c.JSON(401,gin.H{
+		c.JSON(http.StatusUnauthorized,gin.H{
 			"message": "login failed",
 		})
 		return
@@ -56,7 +58,7 @@ func (handler *LoginHandler) Login(c *gin.Context){
 	)
 
 	c.Header("Authorization", "Bearer "+token.AccessToken)
-	c.JSON(200,gin.H{
+	c.JSON(http.StatusOK,gin.H{
 		"message" : "login succesfull",
 	})
 

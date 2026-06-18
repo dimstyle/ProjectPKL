@@ -18,4 +18,5 @@ func UserRoutes(r *gin.RouterGroup,q *db.Queries){
 
 	// Regist account Routes
 	eachUser.GET("/profile",middleware.VerifiedAccessTokenhMiddleware(),handlers.NewUserprofileHandler(q).GetUserProfile)
+	eachUser.POST("/createpost",middleware.VerifiedAccessTokenhMiddleware(), handlers.NewCreatepostHandler(q).CreateUserPost)
 }

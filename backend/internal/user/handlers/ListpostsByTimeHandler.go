@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"backend/internal/db"
-	"backend/internal/user/dto"
 	"backend/internal/user/services"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,27 +20,27 @@ type ListpostsHandler struct {
 
 func (handler *ListpostsHandler) GetPostsByTimeRange(c *gin.Context){
 	ctx  := c.Request.Context()
-	var timeRequest dto.GetPostsByTimeRequest
 
-	err := c.ShouldBindJSON(&timeRequest)
-	if err != nil{
-		c.JSON(400, gin.H{
+	rangeTime, exists := c.GetQuery("range") 
+
+	if !exists{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"message" : "bad request",
 			"posts" : nil,
 		})
 		return
 	}
 
-	posts, err := handler.service.GetPosts(ctx, timeRequest.Range)
+	posts, err := handler.service.GetPosts(ctx, rangeTime)
 	if err != nil {
-		c.JSON(404,gin.H{
+		c.JSON(http.StatusNotFound,gin.H{
 			"message" : "posts not found",
 			"posts" : nil,
 		})
 		return
 	}
 
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"message" : "posts found",
 		"posts" : posts,
 	})

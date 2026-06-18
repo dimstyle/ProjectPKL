@@ -1,0 +1,1 @@
+ALTER TABLE text_posts ADD COLUMN username TEXT NOT NULL;

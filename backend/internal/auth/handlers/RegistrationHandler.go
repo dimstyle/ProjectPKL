@@ -4,6 +4,8 @@ import (
 	"backend/internal/auth/dto"
 	"backend/internal/auth/services"
 	"backend/internal/db"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,7 +25,7 @@ func (handler *RegistrationHandler) Registration(c *gin.Context){
 
 	err = c.ShouldBindJSON(&userData)
 	if err != nil{
-		c.JSON(400,gin.H{
+		c.JSON(http.StatusBadRequest,gin.H{
 			"message" : "bad request",
 		})
 		return
@@ -32,13 +34,13 @@ func (handler *RegistrationHandler) Registration(c *gin.Context){
 	err = handler.service.Registration(c, userData)
 
 	if err != nil {
-		c.JSON(500,gin.H{
+		c.JSON(http.StatusInternalServerError,gin.H{
 			"message" : "internal server error",
 		})
 		return
 	}
 
-	c.JSON(201,gin.H{
+	c.JSON(http.StatusCreated,gin.H{
 		"message" : "success to create user",
 	})
 }
