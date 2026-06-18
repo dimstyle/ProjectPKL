@@ -95,6 +95,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListPostsResponse"
+  
+  /api/user/createpost:
+    post: 
+      summary: make user's post 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:  
+              $ref: "#/components/schemas/CreatePostRequest"
+        
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultResponse"
 
          
 components:
@@ -165,7 +183,7 @@ components:
     PostsResponse:
       type: object
       properties:
-        id:
+        user_id:
           type: integer
         content:
           type: string
@@ -184,6 +202,17 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PostsResponse"
+    
+    CreatePostRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        user_id:
+          type: integer
+        
 
 
 
