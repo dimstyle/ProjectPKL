@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { userProfile, posts} from './userdata'
+import { userProfile, posts, posts_data } from './userdata'
 import { registeredUsers, addUser, findByEmailAndPassword, getById } from './authStorage'
 
 export const handler = [
@@ -63,7 +63,7 @@ export const handler = [
         }
 
         const id = Number(match[1])
-        const user = getById(id)
+        const posts = posts_data.filter(post => post.id == id)
 
         if (!user) {
             return HttpResponse.json({ message: "Invalid token user" }, { status: 401 })
@@ -71,11 +71,7 @@ export const handler = [
 
         return HttpResponse.json({
             message: "success",
-            user: {
-                username: user.username,
-                email: user.email,
-                user_id: user.id
-            }
+            posts: posts
         })
     }),
 
