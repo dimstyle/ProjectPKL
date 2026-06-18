@@ -3,13 +3,14 @@ import DatePicker from 'react-datepicker'
 import { Calendar, Search} from 'lucide-react'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useMemo, useState } from "react"
+import Posts from "./posts"
 
 const MOCK_DATA = [
-    { id: 1, name: "Dola", date: "2026-06-01", amount: "Rp 150.000" },
-    { id: 2, name: "Dora", date: "2026-06-05", amount: "Rp 450.000" },
-    { id: 3, name: "Dimsum", date: "2026-06-10", amount: "Rp 200.000" },
-    { id: 4, name: "Dimas", date: "2026-06-15", amount: "Rp 800.000" },
-    { id: 5, name: "Dadang", date: "2026-06-17", amount: "Rp 2.500.000" }
+    { id: 1, name: "Chicken on the road", date: "2026-06-01"},
+    { id: 2, name: "A man killed in action", date: "2026-06-05"},
+    { id: 3, name: "Plane crashing again at twin tower", date: "2026-06-10"},
+    { id: 4, name: "Dimas got knock out by cockroaches", date: "2026-06-15"},
+    { id: 5, name: "Gunner unconsious!", date: "2026-06-17"}
 ]
 
 export default function Post() {
@@ -63,15 +64,7 @@ export default function Post() {
                         ) : (
                         <div>
                             {filteredData.map((item) => (
-                                <>
-                                    <div key={item.id} className="posts">
-                                        <div>
-                                            <p>{item.name}</p>
-                                            <p>{item.date}</p>
-                                        </div>
-                                        <span>{item.amount}</span>
-                                    </div>
-                                </>
+                                <Posts id={item.id} name={item.name} date={item.date} />
                             ))}
                         </div>
                         )}
