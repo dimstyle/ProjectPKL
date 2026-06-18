@@ -20,6 +20,10 @@ input {
     width: 15rem;
 }
 
+.usersearch {
+    margin-left: 10rem;
+}
+
 .akadub {
     color: white;
     font-family: "monotype corsiva";
@@ -30,4 +34,25 @@ input {
     font-size: large;
     font-weight: 900;
     text-decoration: none;
+}
+
+.loginlink {
+    font-size: large;
+    text-decoration: none;
+}
+
+.postlink {
+    color: blueviolet;
+    padding: 5px;
+    border-radius: 0.5rem;
+    font-size: large;
+    font-weight: 900;
+    text-decoration: none;
+    background-color: white;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }

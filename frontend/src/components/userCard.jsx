@@ -9,7 +9,7 @@ export default function UserCard({id, name, email}) {
                 <img src={profileIcon} alt="profileIcon" width={"100rem"} />
                 <h1 className="username">{name}</h1>
                 <h2 className="useremail">{email}</h2>
-                <Link className="userlink" to={`/user/${id}`}>View Dashboard</Link>
+                <Link className="userlink" to={`/user/${id}`}>View Account</Link>
             </div>
         </>
     )
