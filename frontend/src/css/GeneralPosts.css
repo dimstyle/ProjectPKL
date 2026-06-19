@@ -60,7 +60,7 @@
 .posts-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    gap: 10rem;
     padding: 0 5rem 3rem 5rem;
 }
 

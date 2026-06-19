@@ -36,6 +36,13 @@ const posts = [
         created_at: "2026-06-08T14:00:00.000Z"
     }
 ]
+const posts_data = [
+    { id: 1, title: "Chicken on the road", date: "2026-06-01"},
+    { id: 2, name: "A man killed in action", date: "2026-06-05"},
+    { id: 3, name: "Plane crashing again at twin tower", date: "2026-06-10"},
+    { id: 4, name: "Dimas got knock out by cockroaches", date: "2026-06-15"},
+    { id: 5, name: "Gunner unconsious!", date: "2026-06-17"}
+]
 
 
-export { userProfile, posts }
+export { userProfile, posts, posts_data}
