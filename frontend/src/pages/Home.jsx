@@ -15,7 +15,8 @@ function Home(){
     const [search, setSearch] = useState('');
 
     useEffect(()=>{
-        (async()=>{
+        console.log("hehe")
+        ;(async()=>{
             setError("")
             try{
                 const response = await fetch("/api/users/profiles")  
@@ -33,6 +34,7 @@ function Home(){
             }finally{
                 setLoading(false)
             }
+
         })()
     },[])
 

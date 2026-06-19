@@ -28,7 +28,9 @@ FROM alpine:latest
 WORKDIR /app
 
 COPY --from=backend-builder /backend/main /app
+COPY --from=backend-builder /backend/.env /app/.env
 COPY --from=frontend-builder /frontend/dist /app/frontend
+
 
 EXPOSE 8080
 

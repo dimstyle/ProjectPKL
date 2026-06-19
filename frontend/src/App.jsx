@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Routes, Route, Form } from 'react-router-dom';
+import { useAuthStore } from './stores/authStore';
 import Home from './pages/Home';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
@@ -8,11 +10,34 @@ import AccountSettings from './components/AccountSettings'
 import Post from './components/Post'
 import GeneralPosts from './pages/GeneralPosts';
 import Dashboard from './pages/Dashboard';
+import CreatePosts from './pages/CreatePosts';
 
 function App() {
+  const setAccessToken = useAuthStore(state => state.setAccessToken);
+
+  useEffect(() => {
+    // refresh access token on app mount
+    const refreshAccessToken = async () => {
+      try {
+        const res = await fetch('/api/auth/refresh', { method: 'GET', credentials: 'include' });
+        if (res.ok) {
+          const token = res.headers.get('Authorization');
+          if (token) {
+            setAccessToken(token);
+          }
+        }
+      } catch (err) {
+        console.warn('refresh token failed', err);
+      }
+    };
+
+    refreshAccessToken();
+  }, []);
+
   return(
     <Routes>
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path='/create-post' element={<CreatePosts />} />
       <Route path='/' element={<Home />}/>
       <Route path='/posts' element={<GeneralPosts />} />
       <Route path='/registration' element={<Registration />}/>

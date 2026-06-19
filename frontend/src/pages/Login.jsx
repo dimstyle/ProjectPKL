@@ -27,7 +27,8 @@ function Login(){
                 headers : {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(loginRequest)
+                body: JSON.stringify(loginRequest),
+                credentials: 'include'
             })
             if (!response.ok) {
                 throw new Error(`Gagal! Status: ${response.status}`);
