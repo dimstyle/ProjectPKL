@@ -19,7 +19,7 @@ function App() {
     // refresh access token on app mount
     const refreshAccessToken = async () => {
       try {
-        const res = await fetch('/api/auth/refresh', { method: 'GET', credentials: 'include' });
+        const res = await fetch('/api/auth/refresh_token', { method: 'GET', credentials: 'include' });
         if (res.ok) {
           const token = res.headers.get('Authorization');
           if (token) {

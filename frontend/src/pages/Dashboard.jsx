@@ -98,7 +98,7 @@ function Dashboard() {
                 )}
             </div>
 
-            <div className="dashboard-posts">
+            {/* <div className="dashboard-posts">
                 <div className="dashboard-posts-header">
                     <h2>Your Posts</h2>
                     {postsLoading && <span>Loading posts...</span>}
@@ -118,7 +118,7 @@ function Dashboard() {
                         </div>
                     ))
                 )}
-            </div>
+            </div> */}
         </div>
     );
 }

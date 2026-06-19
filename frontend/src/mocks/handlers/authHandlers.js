@@ -19,7 +19,9 @@ export const authHandlers = [
     }),
 
     // refresh access token using HttpOnly refresh cookie
-    http.get("/api/auth/refresh", ({ request }) => {
+    http.get("/api/auth/refresh_token", ({ request }) => {
+        console.log("here broo")
+
         const cookie = request.headers.get("cookie") || ""
 
         console.log(cookie)
