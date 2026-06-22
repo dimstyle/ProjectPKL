@@ -37,7 +37,7 @@ const posts = [
     }
 ]
 const posts_data = [
-    { id: 1, title: "Chicken on the road", date: "2026-06-01"},
+    { id: 1, name: "Chicken on the road", date: "2026-06-01"},
     { id: 2, name: "A man killed in action", date: "2026-06-05"},
     { id: 3, name: "Plane crashing again at twin tower", date: "2026-06-10"},
     { id: 4, name: "Dimas got knock out by cockroaches", date: "2026-06-15"},

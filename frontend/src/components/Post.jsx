@@ -2,8 +2,10 @@ import "../css/post.css"
 import DatePicker from 'react-datepicker'
 import { Calendar, Search} from 'lucide-react'
 import 'react-datepicker/dist/react-datepicker.css'
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect } from "react"
+import { useAuthStore } from "../stores/authStore"
 import Posts from "./posts"
+import { posts_data } from "../mocks/userdata"
 
 
 export default function Post() {
@@ -32,11 +34,11 @@ export default function Post() {
     })
 
     const filteredData = useMemo(() => {
-        if (!startDate || !endDate) return MOCK_DATA;
+        if (!startDate || !endDate) return posts_data;
         const startStr = startDate?.toISOString().split('T')[0];
         const endStr = endDate?.toISOString().split('T')[0]
 
-        return MOCK_DATA.filter((item) => {
+        return posts_data.filter((item) => {
             return item.date >= startStr && item.date <= endStr;
         })
     }, [startDate, endDate])

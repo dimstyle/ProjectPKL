@@ -48,7 +48,6 @@ function GeneralPosts() {
                         <div className='posts-header__top'>
                             <div>
                                 <h1>General Posts</h1>
-                                <p>Daftar postingan singkat dengan user_id, judul, dan isi konten.</p>
                             </div>
                             <div className='posts-range-wrapper'>
                                 <label htmlFor='post-range' className='posts-range-label'>Filter Range</label>
