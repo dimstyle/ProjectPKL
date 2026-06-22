@@ -15,7 +15,6 @@ function Home(){
     const [search, setSearch] = useState('');
 
     useEffect(()=>{
-        console.log("hehe")
         ;(async()=>{
             setError("")
             try{
@@ -26,9 +25,8 @@ function Home(){
                 }
 
                 const usersdata = await response.json(); //list of users
-               
-                setFilteredUser(usersdata.users)        
-                setUsers(usersdata.users)
+                setFilteredUser(usersdata.users ?? [])        
+                setUsers(usersdata.users ?? [])
             }catch(error){
                 setError(error.message) 
             }finally{

@@ -12,7 +12,7 @@ function GeneralPosts() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [search, setSearch] = useState('')
-    const [range, setRange] = useState('last_24h')
+    const [range, setRange] = useState('from_last_24h')
 
     useEffect(() => {
         ;(async () => {
@@ -26,8 +26,8 @@ function GeneralPosts() {
                 }
 
                 const postsdata = await response.json()
-                setFilteredUser(postsdata.posts)
-                setUsers(postsdata.posts)
+                setFilteredUser(postsdata.posts ?? [])
+                setUsers(postsdata.posts ?? [])
             } catch (error) {
                 setError(error.message)
             } finally {
@@ -58,9 +58,10 @@ function GeneralPosts() {
                                     value={range}
                                     onChange={(event) => setRange(event.target.value)}
                                 >
-                                    <option value='last_hour'>Last Hour</option>
-                                    <option value='last_24h'>Last 24 Hours</option>
-                                    <option value='last_week'>Last Week</option>
+                                    <option value='from_last_30m'>Last 30 Minutes</option>
+                                    <option value='from_last_hour'>Last Hour</option>
+                                    <option value='from_last_24h'>Last 24 Hours</option>
+                                    <option value='from_last_week'>Last Week</option>
                                 </select>
                             </div>
                         </div>
