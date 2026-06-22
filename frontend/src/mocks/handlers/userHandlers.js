@@ -109,5 +109,41 @@ export const userHandlers = [
         posts.push(newPost)
 
         return HttpResponse.json({ message: "success", post: newPost }, { status: 201 })
-    })
+    }),
+
+        http.post("/api/user/createtodolist", async ({ request }) => {
+            const auth = request.headers.get("Authorization") || ""
+
+            if (!auth) {
+                return HttpResponse.json({ message: "Authorization header missing" }, { status: 401 })
+            }
+
+            const match = auth.match(/^access_token_(\d+)$/)
+            if (!match) {
+                return HttpResponse.json({ message: "Invalid token format" }, { status: 401 })
+            }
+
+            const id = Number(match[1])
+            const user = getById(id)
+
+            if (!user) {
+                return HttpResponse.json({ message: "Invalid token user" }, { status: 401 })
+            }
+
+            const body = await request.json().catch(() => ({}))
+            const { user_id, title, description } = body
+
+            if (user_id !== id || !title || !description) {
+                return HttpResponse.json({ message: "user_id, title and description are required and must match authenticated user" }, { status: 400 })
+            }
+
+            const newTodo = {
+                user_id: id,
+                title,
+                description,
+                created_at: new Date().toISOString(),
+            }
+
+            return HttpResponse.json({ message: "success", todo: newTodo }, { status: 201 })
+        })
 ]

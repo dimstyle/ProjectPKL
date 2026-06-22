@@ -107,12 +107,29 @@ paths:
               $ref: "#/components/schemas/CreatePostRequest"
         
       responses:
-        "200":
-          description: Success
+        "201":
+          description: Created
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/DefaultResponse"
+
+  /api/user/createtodolist:
+    post: 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateToDoListRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultResponse"
+
 
          
 components:
@@ -211,7 +228,16 @@ components:
           type: string
         user_id:
           type: integer
-        
+    
+    CreateToDoListRequest:
+      type: object 
+      properties:
+        user_id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
 
 
 

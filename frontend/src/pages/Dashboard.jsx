@@ -13,6 +13,12 @@ function Dashboard() {
     const [error, setError] = useState("");
     const [userPosts, setUserPosts] = useState([]);
     const [postsLoading, setPostsLoading] = useState(false);
+    const [showTodoForm, setShowTodoForm] = useState(false);
+    const [todoTitle, setTodoTitle] = useState("");
+    const [todoDescription, setTodoDescription] = useState("");
+    const [todoLoading, setTodoLoading] = useState(false);
+    const [todoError, setTodoError] = useState("");
+    const [todoSuccess, setTodoSuccess] = useState("");
 
     useEffect(() => {
         if (user) {
@@ -87,6 +93,13 @@ function Dashboard() {
                     <Link className="dashboard-button" to="/create-post">
                         Create New Post
                     </Link>
+                    <button
+                        className="dashboard-button dashboard-button--secondary"
+                        onClick={() => setShowTodoForm(s => !s)}
+                        type="button"
+                    >
+                        Create New To Do List
+                    </button>
                 </div>
                 <p>
                     <strong>Email:</strong> {user.email}
@@ -97,6 +110,64 @@ function Dashboard() {
                     </p>
                 )}
             </div>
+
+            {showTodoForm && (
+                <div className="dashboard-card dashboard-todo">
+                    <h2>Create To Do List</h2>
+                    {todoError && <p className="error">{todoError}</p>}
+                    {todoSuccess && <p className="success">{todoSuccess}</p>}
+                    <form
+                        onSubmit={async (e) => {
+                            e.preventDefault();
+                            setTodoError("");
+                            setTodoSuccess("");
+                            if (!todoTitle || !todoDescription) {
+                                setTodoError("Title and description are required.");
+                                return;
+                            }
+                            setTodoLoading(true);
+                            try {
+                                const res = await fetch("/api/user/createtodolist", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        Authorization: accessToken,
+                                    },
+                                    body: JSON.stringify({ user_id: user.id, title: todoTitle, description: todoDescription }),
+                                });
+
+                                if (!res.ok) {
+                                    const err = await res.json().catch(() => ({}));
+                                    throw new Error(err.message || "Could not create todo list.");
+                                }
+
+                                const data = await res.json();
+                                setTodoSuccess("To do list created.");
+                                setTodoTitle("");
+                                setTodoDescription("");
+                                setShowTodoForm(false);
+                            } catch (err) {
+                                setTodoError(err.message);
+                            } finally {
+                                setTodoLoading(false);
+                            }
+                        }}
+                    >
+                        <div>
+                            <label>Title</label>
+                            <input value={todoTitle} onChange={e => setTodoTitle(e.target.value)} />
+                        </div>
+                        <div>
+                            <label>Description</label>
+                            <textarea value={todoDescription} onChange={e => setTodoDescription(e.target.value)} />
+                        </div>
+                        <div style={{ marginTop: 8 }}>
+                            <button className="dashboard-button" type="submit" disabled={todoLoading}>{todoLoading ? "Creating..." : "Create"}</button>
+                            <button type="button" className="dashboard-button dashboard-button--muted" onClick={() => setShowTodoForm(false)} style={{ marginLeft: 8 }}>Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            )}
 
             {/* <div className="dashboard-posts">
                 <div className="dashboard-posts-header">
