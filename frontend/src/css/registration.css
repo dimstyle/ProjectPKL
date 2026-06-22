@@ -41,7 +41,7 @@ a {
     color: white;
 }
 
-button {
+.regbutton {
     border: none;
     border-radius: 5px;
     font-size: 1rem;
