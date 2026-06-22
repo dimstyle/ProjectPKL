@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"backend/internal/db"
-	"backend/internal/user/services"
+	"backend/internal/post/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

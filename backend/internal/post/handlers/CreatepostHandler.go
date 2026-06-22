@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"backend/internal/db"
-	"backend/internal/user/dto"
-	"backend/internal/user/services"
+	"backend/internal/post/dto"
+	"backend/internal/post/services"
 	"backend/pkg/jwt"
 	"net/http"
 

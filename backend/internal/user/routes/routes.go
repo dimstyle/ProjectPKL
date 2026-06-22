@@ -12,11 +12,11 @@ func UserRoutes(r *gin.RouterGroup,q *db.Queries){
 
 	// Regist list user Routes
 	users.GET("/profiles",handlers.NewListuserHandler(q).Listuser)
-	users.GET("/posts", handlers.NewListpostsHandler(q).GetPostsByTimeRange)
+	users.GET("/profile/:id", handlers.NewUserprofileHandler(q).GetProfile)
+	
 
 	eachUser := r.Group("/user")
 
 	// Regist account Routes
-	eachUser.GET("/profile",middleware.VerifiedAccessTokenhMiddleware(),handlers.NewUserprofileHandler(q).GetUserProfile)
-	eachUser.POST("/createpost",middleware.VerifiedAccessTokenhMiddleware(), handlers.NewCreatepostHandler(q).CreateUserPost)
+	eachUser.GET("/profile",middleware.VerifiedAccessTokenhMiddleware(),handlers.NewMyprofileHandler(q).GetMyProfile)
 }

@@ -7,30 +7,23 @@ package db
 
 import (
 	"context"
-	"time"
 )
 
 const getUserDataById = `-- name: GetUserDataById :one
-SELECT id, username, email, created_at
+SELECT id, username, email
 FROM users
 WHERE id = $1
 `
 
 type GetUserDataByIdRow struct {
-	ID        int32     `json:"id"`
-	Username  string    `json:"username"`
-	Email     string    `json:"email"`
-	CreatedAt time.Time `json:"created_at"`
+	ID       int32  `json:"id"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
 }
 
 func (q *Queries) GetUserDataById(ctx context.Context, id int32) (GetUserDataByIdRow, error) {
 	row := q.db.QueryRow(ctx, getUserDataById, id)
 	var i GetUserDataByIdRow
-	err := row.Scan(
-		&i.ID,
-		&i.Username,
-		&i.Email,
-		&i.CreatedAt,
-	)
+	err := row.Scan(&i.ID, &i.Username, &i.Email)
 	return i, err
 }

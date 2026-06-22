@@ -1,4 +1,4 @@
 -- name: GetUserDataById :one
-SELECT id, username, email, created_at
+SELECT id, username, email
 FROM users
 WHERE id = $1;

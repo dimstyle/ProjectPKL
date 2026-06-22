@@ -3,10 +3,11 @@ package handlers
 import (
 	"backend/internal/db"
 	"backend/internal/user/services"
-	"backend/pkg/jwt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"strconv"
 )
 
 func NewUserprofileHandler(q *db.Queries) *UserprofileHandler{
@@ -15,36 +16,32 @@ func NewUserprofileHandler(q *db.Queries) *UserprofileHandler{
 	}
 }
 
-type UserprofileHandler struct{
+type UserprofileHandler struct {
 	service *services.UserprofileService
 }
 
-func (handler *UserprofileHandler) GetUserProfile(c *gin.Context){
+func (handler *UserprofileHandler) GetProfile(c *gin.Context){
 	ctx := c.Request.Context()
+	UserID := c.Param("id")
 
-	tokenobj, exists := c.Get("jwt_claims")
-	if !exists {
-		c.JSON(http.StatusInternalServerError, gin.H{
-		"message" : "internal server error",
+	intid, err := strconv.Atoi(UserID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message" : "bad request",
 		})
+		return
 	}
 
-	JwtClaims, ok := tokenobj.(*jwt.Claims)
-	if !ok{
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message" : "internal server error",
-		})
-	}
-
-	user, err := handler.service.GetUserProfile(ctx, JwtClaims.UserID)
-	if err != nil{
+	user, err := handler.service.GetProfileWithId(ctx, int32(intid))
+	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message" : "user not found",
+			"message" : "User is not found",
 		})
+		return
 	}
 
-	c.JSON(http.StatusOK,gin.H{
-		"message" : "user found",
+	c.JSON(http.StatusOK, gin.H{
+		"message" : "success to fetch user", 
 		"user" : user,
 	})
 }
