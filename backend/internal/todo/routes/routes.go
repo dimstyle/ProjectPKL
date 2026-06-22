@@ -14,5 +14,5 @@ func TodoRoutes(r *gin.RouterGroup, q *db.Queries){
 	eachUser.POST("/createtodoproject",middleware.VerifiedAccessTokenhMiddleware(),handlers.NewCreatetodolistprojectHandler(q).CreateProject)
 	eachUser.POST("/createtodo", middleware.VerifiedAccessTokenhMiddleware(), handlers.NewCreatetodoHandler(q).CreateTodo)
 	eachUser.PATCH("/updatetodo",middleware.VerifiedAccessTokenhMiddleware(), handlers.NewUpdatecompletetodoHandler(q).UpdateComplete)
-	eachUser.DELETE("/deletetodo",middleware.VerifiedAccessTokenhMiddleware())
+	eachUser.DELETE("/deletetodo",middleware.VerifiedAccessTokenhMiddleware(), handlers.NewDeletetodoHandler(q).DeleteList)
 }
