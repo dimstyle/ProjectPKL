@@ -51,7 +51,7 @@ function Login(){
                 <div className="inputs">
                     <input ref={email} type="text" placeholder="Email"/>
                     <input ref={password} type="password" placeholder="Password" />
-                    <button onClick={loginAction}>Login</button>
+                    <button className='regbutton' onClick={loginAction}>Login</button>
                     <div>
                         <p>Didn't have an account?</p>
                         <Link to="/registration">Create an account </Link>

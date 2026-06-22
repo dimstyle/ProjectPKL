@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import Error from "./Error";
 import { useAuthStore } from "../stores/authStore";
+import profileIcon from "../assets/download-removebg-preview.png"
 import "../css/Dashboard.css";
 
 function Dashboard() {
@@ -89,7 +90,20 @@ function Dashboard() {
         <div className="dashboard-body">
             <div className="dashboard-card">
                 <div className="dashboard-card__header">
-                    <h1>Welcome, {user.username}</h1>
+                    <img src={profileIcon} alt="icon" />
+                    <div className="dashboardinfo">
+                        <h1>{user.username}</h1>
+                    <p>
+                        <strong>Email:</strong> {user.email}
+                    </p>
+                    {user.id && (
+                        <p>
+                            <strong>User ID:</strong> {user.id}
+                        </p>
+                    )}
+                    </div>
+                </div>
+                <div className="dashboardbuttons">
                     <Link className="dashboard-button" to="/create-post">
                         Create New Post
                     </Link>
@@ -98,17 +112,9 @@ function Dashboard() {
                         onClick={() => setShowTodoForm(s => !s)}
                         type="button"
                     >
-                        Create New To Do List
+                        Create To Do List
                     </button>
                 </div>
-                <p>
-                    <strong>Email:</strong> {user.email}
-                </p>
-                {user.id && (
-                    <p>
-                        <strong>User ID:</strong> {user.id}
-                    </p>
-                )}
             </div>
 
             {showTodoForm && (

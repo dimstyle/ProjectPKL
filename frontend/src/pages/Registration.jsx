@@ -47,7 +47,7 @@ function Registration(){
                     <input ref={username} type="text" placeholder="username"/>
                     <input ref={email} type="text" placeholder="email"/>
                     <input ref={password} type="password" placeholder="password"/>
-                    <button onClick={signupAction}>Sign up</button>
+                    <button className='regbutton' onClick={signupAction}>Sign up</button>
                     <div>
                         <p>Already have an account?</p>
                         <Link to="/login">Log In</Link>
