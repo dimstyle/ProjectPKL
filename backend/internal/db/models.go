@@ -8,6 +8,13 @@ import (
 	"time"
 )
 
+type ProjectsTodoList struct {
+	ID        int32     `json:"id"`
+	UserID    int32     `json:"user_id"`
+	Title     string    `json:"title"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
 type RefreshToken struct {
 	ID     int32  `json:"id"`
 	UserID int32  `json:"user_id"`
@@ -21,6 +28,16 @@ type TextPost struct {
 	Content   string    `json:"content"`
 	Username  string    `json:"username"`
 	CreatedAt time.Time `json:"created_at"`
+}
+
+type TodoList struct {
+	ID          int32     `json:"id"`
+	ProjectID   int32     `json:"project_id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Completed   bool      `json:"completed"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 type User struct {

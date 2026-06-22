@@ -7,7 +7,7 @@ import (
 	"backend/internal/middleware"
 )
 
-func PostRoutes(r *gin.Engine, q *db.Queries){
+func PostRoutes(r *gin.RouterGroup, q *db.Queries){
 	users := r.Group("/users")
 	users.GET("/posts", handlers.NewListpostsHandler(q).GetPostsByTimeRange)
 	users.GET("/post/:id")
