@@ -17,8 +17,8 @@ type DeletetodoService struct {
 }
 
 
-func (service *DeletetodoService) DeleteList(ctx context.Context, ToDoID int32) error {
-	_, err := service.repo.DeleteToDoByID(ctx, ToDoID)
+func (service *DeletetodoService) DeleteList(ctx context.Context, DeleteRequest db.DeleteToDoByIDParams) error {
+	_, err := service.repo.DeleteToDoByID(ctx, DeleteRequest)
 	if err != nil{
 		log.Println(err.Error())
 		return err

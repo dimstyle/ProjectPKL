@@ -4,6 +4,7 @@ import (
 	"backend/internal/db"
 	"backend/internal/todo/dto"
 	"backend/internal/todo/services"
+	"backend/pkg/jwt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -23,6 +24,20 @@ func(handler *UpdatecompletetodoHandler) UpdateComplete(c *gin.Context){
 	ctx := c.Request.Context()
 	var UpdateRequest dto.UpdateCompleteToDoRequest
 
+	tokenobj, exists := c.Get("jwt_claims")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{
+		"message" : "internal server error",
+		})
+	}
+
+	JwtClaims, ok := tokenobj.(*jwt.Claims)
+	if !ok{
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message" : "internal server error",
+		})
+	}
+
 	err := c.ShouldBindJSON(&UpdateRequest)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -35,6 +50,7 @@ func(handler *UpdatecompletetodoHandler) UpdateComplete(c *gin.Context){
 
 	Updated, err := handler.service.UpdateComplete(ctx, db.UpdateCompleteToDoParams{
 		ID: UpdateRequest.ID,
+		UserID: JwtClaims.UserID,
 		Completed: UpdateRequest.Complete,
 	})
 	if err != nil{

@@ -14,17 +14,18 @@ UPDATE todo_list
 SET 
     completed = $2,
     updated_at = NOW()
-WHERE id = $1
+WHERE id = $1 AND user_id = $3
 RETURNING id, project_id, user_id, title, description, completed, created_at, updated_at
 `
 
 type UpdateCompleteToDoParams struct {
 	ID        int32 `json:"id"`
 	Completed bool  `json:"completed"`
+	UserID    int32 `json:"user_id"`
 }
 
 func (q *Queries) UpdateCompleteToDo(ctx context.Context, arg UpdateCompleteToDoParams) (TodoList, error) {
-	row := q.db.QueryRow(ctx, updateCompleteToDo, arg.ID, arg.Completed)
+	row := q.db.QueryRow(ctx, updateCompleteToDo, arg.ID, arg.Completed, arg.UserID)
 	var i TodoList
 	err := row.Scan(
 		&i.ID,

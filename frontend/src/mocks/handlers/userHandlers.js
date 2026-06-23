@@ -296,5 +296,68 @@ export const userHandlers = [
 
         return HttpResponse.json({ message: "success", deletedId: todoId }, { status: 200 })
     })
+    ,
+
+    http.get("/api/user/gettodolist", ({ request }) => {
+        const auth = request.headers.get("Authorization") || ""
+
+        if (!auth) {
+            return HttpResponse.json({ message: "Authorization header missing" }, { status: 401 })
+        }
+
+        const match = auth.match(/^access_token_(\d+)$/)
+        if (!match) {
+            return HttpResponse.json({ message: "Invalid token format" }, { status: 401 })
+        }
+
+        const id = Number(match[1])
+        const user = getById(id)
+
+        if (!user) {
+            return HttpResponse.json({ message: "Invalid token user" }, { status: 401 })
+        }
+
+        const url = new URL(request.url)
+        const projectIdParam = url.searchParams.get('project_id')
+
+        let results = todoLists.filter(t => t.user_id === id)
+
+        if (projectIdParam != null) {
+            const pid = Number(projectIdParam)
+            if (Number.isNaN(pid)) {
+                return HttpResponse.json({ message: "project_id must be a number" }, { status: 400 })
+            }
+            results = results.filter(t => t.project_id === pid)
+        }
+
+        return HttpResponse.json({ message: "success", todos: results }, { status: 200 })
+    })
+
+    ,
+
+    http.get("/api/user/getuserproject", ({ request }) => {
+        const auth = request.headers.get("Authorization") || ""
+
+        if (!auth) {
+            return HttpResponse.json({ message: "Authorization header missing" }, { status: 401 })
+        }
+
+        const match = auth.match(/^access_token_(\d+)$/)
+        if (!match) {
+            return HttpResponse.json({ message: "Invalid token format" }, { status: 401 })
+        }
+
+        const id = Number(match[1])
+        const user = getById(id)
+
+        if (!user) {
+            return HttpResponse.json({ message: "Invalid token user" }, { status: 401 })
+        }
+
+        const results = todoProjects.filter(p => p.user_id === id)
+
+        return HttpResponse.json({ message: "success", projects: results }, { status: 200 })
+    })
+
 ]
 

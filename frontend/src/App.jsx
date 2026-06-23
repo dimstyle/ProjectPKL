@@ -39,7 +39,7 @@ function App() {
     <Routes>
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path='/create-post' element={<CreatePosts />} />
-      <Route path='/to-do-list' element={<ToDoList/>} />
+      <Route path='/to_do_list/:project_id' element={<ToDoList/>} />
       <Route path='/' element={<Home />}/>
       <Route path='/posts' element={<GeneralPosts />} />
       <Route path='/registration' element={<Registration />}/>

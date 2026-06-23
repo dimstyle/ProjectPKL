@@ -4,6 +4,7 @@ import (
 	"backend/internal/db"
 	"backend/internal/todo/dto"
 	"backend/internal/todo/services"
+	"backend/pkg/jwt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -21,8 +22,21 @@ type DeletetodoHandler struct {
 
 func (handler *DeletetodoHandler) DeleteList(c *gin.Context){
 	ctx := c.Request.Context()
-
 	var DeleteRequest dto.DeleteToDoListRequest
+
+	tokenobj, exists := c.Get("jwt_claims")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{
+		"message" : "internal server error",
+		})
+	}
+
+	JwtClaims, ok := tokenobj.(*jwt.Claims)
+	if !ok{
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message" : "internal server error",
+		})
+	}
 
 	err := c.ShouldBindJSON(&DeleteRequest)
 	if err != nil{
@@ -32,7 +46,10 @@ func (handler *DeletetodoHandler) DeleteList(c *gin.Context){
 		return
 	}
 
-	err = handler.service.DeleteList(ctx, DeleteRequest.ListID)
+	err = handler.service.DeleteList(ctx, db.DeleteToDoByIDParams{
+		UserID: JwtClaims.UserID,
+		ID: DeleteRequest.ListID,
+	})
 	if err != nil{
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message" : "internal server error",

@@ -20,6 +20,9 @@ function Dashboard() {
     const [todoLoading, setTodoLoading] = useState(false);
     const [todoError, setTodoError] = useState("");
     const [todoSuccess, setTodoSuccess] = useState("");
+    const [todoProjects, setTodoProjects] = useState([]);
+    const [projectsLoading, setProjectsLoading] = useState(false);
+    const [refreshProjects, setRefreshProjects] = useState(0);
 
     useEffect(() => {
         if (user) {
@@ -82,6 +85,33 @@ function Dashboard() {
         })();
     }, [accessToken, user]);
 
+    useEffect(() => {
+        if (!user || !accessToken) return;
+
+        setProjectsLoading(true);
+
+        (async () => {
+            try {
+                const response = await fetch("/api/user/getuserproject", {
+                    headers: {
+                        Authorization: accessToken,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error("Could not load projects.");
+                }
+
+                const data = await response.json();
+                setTodoProjects(data.projects || []);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setProjectsLoading(false);
+            }
+        })();
+    }, [accessToken, user, refreshProjects]);
+
     if (loading) return <Loading />;
     if (error) return <Error errormessage={error} />;
     if (!user) return <Error errormessage="User data is not available." />;
@@ -112,7 +142,7 @@ function Dashboard() {
                         onClick={() => setShowTodoForm(s => !s)}
                         type="button"
                     >
-                        Create To Do List
+                        Create To Do Project
                     </button>
                 </div>
             </div>
@@ -127,19 +157,19 @@ function Dashboard() {
                             e.preventDefault();
                             setTodoError("");
                             setTodoSuccess("");
-                            if (!todoTitle || !todoDescription) {
-                                setTodoError("Title and description are required.");
+                            if (!todoTitle ) {
+                                setTodoError("Title is required.");
                                 return;
                             }
                             setTodoLoading(true);
                             try {
-                                const res = await fetch("/api/user/createtodolist", {
+                                const res = await fetch("/api/user/createtodoproject", {
                                     method: "POST",
                                     headers: {
                                         "Content-Type": "application/json",
                                         Authorization: accessToken,
                                     },
-                                    body: JSON.stringify({ user_id: user.id, title: todoTitle, description: todoDescription }),
+                                    body: JSON.stringify({ title: todoTitle }),
                                 });
 
                                 if (!res.ok) {
@@ -148,10 +178,11 @@ function Dashboard() {
                                 }
 
                                 const data = await res.json();
-                                setTodoSuccess("To do list created.");
+                                setTodoSuccess("To do project created.");
                                 setTodoTitle("");
                                 setTodoDescription("");
                                 setShowTodoForm(false);
+                                setRefreshProjects(prev => prev + 1);
                             } catch (err) {
                                 setTodoError(err.message);
                             } finally {
@@ -163,10 +194,10 @@ function Dashboard() {
                             <label>Title</label>
                             <input className="todotitle" value={todoTitle} onChange={e => setTodoTitle(e.target.value)} />
                         </div>
-                        <div className="tododescarea">
+                        {/* <div className="tododescarea">
                             <label>Description</label>
                             <textarea className="tododesc" value={todoDescription} onChange={e => setTodoDescription(e.target.value)} />
-                        </div>
+                        </div> */}
                         <div className="todobuttons">
                             <button className="dashboard-button" type="submit" disabled={todoLoading}>{todoLoading ? "Creating..." : "Create"}</button>
                             <button type="button" className="dashboard-button dashboard-button--muted" onClick={() => setShowTodoForm(false)} style={{ marginLeft: 8 }}>Cancel</button>
@@ -174,6 +205,31 @@ function Dashboard() {
                     </form>
                 </div>
             )}
+
+            <div className="dashboard-card">
+                <h2>Your Todo Projects</h2>
+                {projectsLoading && <p>Loading projects...</p>}
+                {todoProjects.length === 0 && !projectsLoading && (
+                    <p>No projects yet. Create one to get started!</p>
+                )}
+                {todoProjects.length > 0 && (
+                    <ul className="projects-list" style={{ listStyle: 'none', padding: 0 }}>
+                        {todoProjects.map((project) => (
+                            <li key={project.id} style={{ marginBottom: '10px', padding: '10px', border: '1px solid #ddd', borderRadius: '4px' }}>
+                                <Link
+                                    to={`/to_do_list/${project.id}`}
+                                    style={{ textDecoration: 'none', color: '#007bff', fontWeight: 'bold' }}
+                                >
+                                    {project.title}
+                                </Link>
+                                <p style={{ margin: '5px 0 0 0', fontSize: '0.85em', color: '#666' }}>
+                                    Created: {new Date(project.created_at).toLocaleDateString()}
+                                </p>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
         </div>
     );
 }

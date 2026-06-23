@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"backend/pkg/jwt"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -52,8 +51,6 @@ func VerifiedRefreshTokenMiddleware() gin.HandlerFunc{
 			}) 
 			return 
 		}
-
-		fmt.Println(refreshToken)
 
 		c.Set("refresh_token", refreshToken)
 		c.Next()

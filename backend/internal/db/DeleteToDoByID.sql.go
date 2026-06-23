@@ -11,12 +11,17 @@ import (
 
 const deleteToDoByID = `-- name: DeleteToDoByID :one
 DELETE FROM todo_list 
-WHERE id = $1
+WHERE id = $1 AND user_id = $2
 RETURNING id, project_id, user_id, title, description, completed, created_at, updated_at
 `
 
-func (q *Queries) DeleteToDoByID(ctx context.Context, id int32) (TodoList, error) {
-	row := q.db.QueryRow(ctx, deleteToDoByID, id)
+type DeleteToDoByIDParams struct {
+	ID     int32 `json:"id"`
+	UserID int32 `json:"user_id"`
+}
+
+func (q *Queries) DeleteToDoByID(ctx context.Context, arg DeleteToDoByIDParams) (TodoList, error) {
+	row := q.db.QueryRow(ctx, deleteToDoByID, arg.ID, arg.UserID)
 	var i TodoList
 	err := row.Scan(
 		&i.ID,
