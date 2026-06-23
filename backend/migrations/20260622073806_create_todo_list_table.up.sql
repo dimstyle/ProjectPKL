@@ -1,5 +1,6 @@
 CREATE TABLE todo_list(
     id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
     project_id INT NOT NULL,
     title TEXT NOT NULL,
     description TEXT NOT NULL,

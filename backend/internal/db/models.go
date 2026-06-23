@@ -33,6 +33,7 @@ type TextPost struct {
 type TodoList struct {
 	ID          int32     `json:"id"`
 	ProjectID   int32     `json:"project_id"`
+	UserID      int32     `json:"user_id"`
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
 	Completed   bool      `json:"completed"`

@@ -3,9 +3,11 @@ package handlers
 import (
 	"backend/internal/db"
 	"backend/internal/post/services"
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5"
 )
 
 func NewListpostsHandler(q *db.Queries) *ListpostsHandler{
@@ -33,8 +35,15 @@ func (handler *ListpostsHandler) GetPostsByTimeRange(c *gin.Context){
 
 	posts, err := handler.service.GetPosts(ctx, rangeTime)
 	if err != nil {
-		c.JSON(http.StatusNotFound,gin.H{
-			"message" : "posts not found",
+		if errors.Is(err, pgx.ErrNoRows){
+			c.JSON(http.StatusNotFound,gin.H{
+				"message" : "posts not found",
+				"posts" : nil,
+			})
+			return
+		}
+		c.JSON(http.StatusInternalServerError,gin.H{
+			"message" : "internal server error",
 			"posts" : nil,
 		})
 		return

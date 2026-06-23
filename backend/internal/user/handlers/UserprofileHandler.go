@@ -3,9 +3,11 @@ package handlers
 import (
 	"backend/internal/db"
 	"backend/internal/user/services"
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5"
 
 	"strconv"
 )
@@ -34,10 +36,17 @@ func (handler *UserprofileHandler) GetProfile(c *gin.Context){
 
 	user, err := handler.service.GetProfileWithId(ctx, int32(intid))
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"message" : "User is not found",
+		if errors.Is(err, pgx.ErrNoRows){
+			c.JSON(http.StatusNotFound, gin.H{
+				"message" : "User is not found",
+			})
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError,gin.H{
+			"message" : "internal server error",
 		})
-		return
+
 	}
 
 	c.JSON(http.StatusOK, gin.H{

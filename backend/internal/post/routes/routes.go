@@ -10,7 +10,7 @@ import (
 func PostRoutes(r *gin.RouterGroup, q *db.Queries){
 	users := r.Group("/users")
 	users.GET("/posts", handlers.NewListpostsHandler(q).GetPostsByTimeRange)
-	users.GET("/post/:id")
+	users.GET("/post/:id",handlers.NewUserpostHandler(q).GetPost)
 
 	eachUser := r.Group("/user")
 	eachUser.POST("/createpost",middleware.VerifiedAccessTokenhMiddleware(), handlers.NewCreatepostHandler(q).CreateUserPost)	

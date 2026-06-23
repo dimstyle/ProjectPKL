@@ -10,7 +10,7 @@ export const usersHandlers = [
         })
     }),
 
-    http.get("/api/users/profiles/:id", ({ params }) => {
+    http.get("/api/users/profile/:id", ({ params }) => {
         const { id } = params
 
         return HttpResponse.json(userProfile[id - 1])

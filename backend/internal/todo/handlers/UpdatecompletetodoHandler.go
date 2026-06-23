@@ -27,6 +27,8 @@ func(handler *UpdatecompletetodoHandler) UpdateComplete(c *gin.Context){
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message" : "bad request",
+			"id" : nil,
+			"completed" : nil,
 		})
 		return
 	}
@@ -38,6 +40,8 @@ func(handler *UpdatecompletetodoHandler) UpdateComplete(c *gin.Context){
 	if err != nil{
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message" : "internal server error",
+			"id" : nil,
+			"completed" : nil,
 		})
 		return 
 	}

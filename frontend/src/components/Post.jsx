@@ -1,48 +1,60 @@
 import "../css/post.css"
 import DatePicker from 'react-datepicker'
-import { Calendar, Search} from 'lucide-react'
+import { Calendar, Search, User} from 'lucide-react'
 import 'react-datepicker/dist/react-datepicker.css'
-import { useMemo, useState, useEffect } from "react"
-import { useAuthStore } from "../stores/authStore"
+import { useState, useEffect } from "react"
 import Posts from "./posts"
 import { posts_data } from "../mocks/userdata"
+import Loading from "../pages/Loading"
+import Error from "../pages/Error"
+import { useOutletContext, useParams } from "react-router-dom"
 
 
 export default function Post() {
+    const { UserID } = useParams("userId")
+    const { user } = useOutletContext()
+    
+    const [filteredData, setFilteredData] = useState([])
     const [dateRange, setDateRange] = useState([null, null])
     const [startDate, endDate] = dateRange
-    const accessToken = useAuthStore(state => state.accessToken)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState()
 
     useEffect(()=>{
-        (async ()=>{
+        ;(async ()=>{
+            setError("")
             try{
-                const response = await fetch("/api/user/post",{
-                    headers: accessToken
-                })
+                const params = new URLSearchParams();
+                const start = startDate ?? new Date();
+                const end = endDate ?? new Date(Date.now() + 6 * 86400000);  
+
+                if (start) params.append('start_date', start.toISOString().split("T")[0]);
+                if (end) params.append('end_date', end.toISOString().split("T")[0]);
+
+                const url = `/api/users/post/${user.id}?${params}`
+
+                const response = await fetch(url)
                 
                 if(!response.ok){
                     throw new Error("posts not found")
                 }
-
                 
+                const dataJSON = await response.json()
 
+                setFilteredData(dataJSON.posts ?? [])
+                
             }catch(err){
-
+                setError(err);
+            }finally{
+                setLoading(false);
             }
 
         })()
-    })
+    }, [dateRange])
 
-    const filteredData = useMemo(() => {
-        if (!startDate || !endDate) return posts_data;
-        const startStr = startDate?.toISOString().split('T')[0];
-        const endStr = endDate?.toISOString().split('T')[0]
-
-        return posts_data.filter((item) => {
-            return item.date >= startStr && item.date <= endStr;
-        })
-    }, [startDate, endDate])
-
+    if(loading) return <Loading />
+    if (error) return <Error errormessage={error.message} />
+    console.log(filteredData)
     return (
         <>
             <nav className="userprofilenav">
@@ -80,7 +92,7 @@ export default function Post() {
                         ) : (
                         <div>
                             {filteredData.map((item) => (
-                                <Posts id={item.id} name={item.name} date={item.date} />
+                                <Posts id={item.id} username={item.username} title={item.title} content={item.content} date={item.created_at} />
                             ))}
                         </div>
                         )}

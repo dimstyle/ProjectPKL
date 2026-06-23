@@ -3,9 +3,11 @@ package handlers
 import (
 	"backend/internal/db"
 	"backend/internal/user/services"
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5"
 )
 
 func NewListuserHandler(q *db.Queries) *ListuserHandler{
@@ -24,10 +26,18 @@ func (handler *ListuserHandler) Listuser(c *gin.Context){
 	users, err := handler.service.GetUser(ctx)
 
 
-	if(err != nil){
-		c.JSON(http.StatusNotFound,gin.H{
-			"message" : "user not found",
-			"users"	: nil,
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows){
+			c.JSON(http.StatusNotFound,gin.H{
+				"message" : "user not found",
+				"users"	: nil,
+			})
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError,gin.H{
+			"message" : "internal server error",
+			"users" : nil,
 		})
 		return
 	}
