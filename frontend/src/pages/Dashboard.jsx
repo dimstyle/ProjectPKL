@@ -159,15 +159,15 @@ function Dashboard() {
                             }
                         }}
                     >
-                        <div>
+                        <div className="todotitlearea">
                             <label>Title</label>
-                            <input value={todoTitle} onChange={e => setTodoTitle(e.target.value)} />
+                            <input className="todotitle" value={todoTitle} onChange={e => setTodoTitle(e.target.value)} />
                         </div>
-                        <div>
+                        <div className="tododescarea">
                             <label>Description</label>
-                            <textarea value={todoDescription} onChange={e => setTodoDescription(e.target.value)} />
+                            <textarea className="tododesc" value={todoDescription} onChange={e => setTodoDescription(e.target.value)} />
                         </div>
-                        <div style={{ marginTop: 8 }}>
+                        <div className="todobuttons">
                             <button className="dashboard-button" type="submit" disabled={todoLoading}>{todoLoading ? "Creating..." : "Create"}</button>
                             <button type="button" className="dashboard-button dashboard-button--muted" onClick={() => setShowTodoForm(false)} style={{ marginLeft: 8 }}>Cancel</button>
                         </div>

@@ -11,6 +11,7 @@ import Post from './components/Post'
 import GeneralPosts from './pages/GeneralPosts';
 import Dashboard from './pages/Dashboard';
 import CreatePosts from './pages/CreatePosts';
+import ToDoList from './pages/Todolist';
 
 function App() {
   const setAccessToken = useAuthStore(state => state.setAccessToken);
@@ -38,6 +39,7 @@ function App() {
     <Routes>
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path='/create-post' element={<CreatePosts />} />
+      <Route path='/to-do-list' element={<ToDoList/>} />
       <Route path='/' element={<Home />}/>
       <Route path='/posts' element={<GeneralPosts />} />
       <Route path='/registration' element={<Registration />}/>

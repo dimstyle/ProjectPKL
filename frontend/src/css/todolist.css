@@ -1,0 +1,100 @@
+.todobody {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.todoh1 {
+    background-image: linear-gradient(to bottom, blue, violet);
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0px 0px 20px black;
+}
+
+.todoform {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.todoform button {
+    background-image: linear-gradient(to bottom, blue, violet);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: white;
+}
+
+.todoform button:hover {
+    box-shadow: 0px 0px 10px blueviolet;    
+}
+
+.todolist {
+    list-style: none;
+    padding: 0;
+}
+
+.todolist li {
+    width: 19rem;
+    padding: 1rem;
+    height: 2rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 10px black;
+    background-image: linear-gradient(to bottom, blue, violet);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.texttask {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+.todocontent {
+    display: flex;
+    align-items: center;
+}
+
+.checkmark {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.checkmark.checked {
+    background-color: green;
+    border-color: lime;
+}
+
+li.completed .texttask {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.tododeletebtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: red;
+    font-weight: bolder;
+    font-size: 3vh;
+    text-shadow: 0px 0px 5px black;
+}
