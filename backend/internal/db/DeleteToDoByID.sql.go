@@ -12,7 +12,7 @@ import (
 const deleteToDoByID = `-- name: DeleteToDoByID :one
 DELETE FROM todo_list 
 WHERE id = $1 AND user_id = $2
-RETURNING id, project_id, user_id, title, description, completed, created_at, updated_at
+RETURNING id, project_id, user_id, title, completed, created_at, updated_at
 `
 
 type DeleteToDoByIDParams struct {
@@ -28,7 +28,6 @@ func (q *Queries) DeleteToDoByID(ctx context.Context, arg DeleteToDoByIDParams) 
 		&i.ProjectID,
 		&i.UserID,
 		&i.Title,
-		&i.Description,
 		&i.Completed,
 		&i.CreatedAt,
 		&i.UpdatedAt,

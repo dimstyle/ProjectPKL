@@ -2,10 +2,12 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useAuthStore } from "../stores/authStore"
 import "../css/todolist.css"
+import Loading from "./Loading"
+import Error from "./Error"
 
 export default function ToDoList() {
     const { projectId } = useParams()
-    const { accessToken } = useAuthStore(state => state.accessToken)
+    const accessToken = useAuthStore(state => state.accessToken)
     const [todos, setTodos] = useState([])
     const [task, setTask] = useState('')
     const [loading, setLoading] = useState(true)
@@ -14,9 +16,7 @@ export default function ToDoList() {
 
     // Fetch todos for this project
     useEffect(() => {
-        if (!projectId || !accessToken || !user) return
-
-        (async () => {
+        ;(async () => {
             setLoading(true)
             setError("")
             try {
@@ -25,7 +25,7 @@ export default function ToDoList() {
                 })
                 if (!res.ok) throw new Error("Failed to fetch todos")
                 const data = await res.json()
-                setTodos(data.todos || [])
+                setTodos(data.todo_lists || [])
             } catch (err) {
                 setError(err.message)
                 console.error(err)
@@ -35,9 +35,9 @@ export default function ToDoList() {
         })()
     }, [projectId, accessToken, refreshTodos])
 
-    useEffect(() => {
-        localStorage.setItem('my_todo_list', JSON.stringify(todos));
-    }, [todos]);
+    // useEffect(() => {
+    //     localStorage.setItem('my_todo_list', JSON.stringify(todos));
+    // }, [todos]);
 
     const addTodo = (e) => {
         e.preventDefault()
@@ -57,15 +57,14 @@ export default function ToDoList() {
                         Authorization: accessToken,
                     },
                     body: JSON.stringify({
-                        projectid: Number(projectId),
-                        title: task,
-                        description: task,
-                        completed: false,
+                        project_id: Number(projectId),
+                        title: task
                     }),
                 })
                 if (!res.ok) throw new Error((await res.json()).message || "Failed to create todo")
+
                 const data = await res.json()
-                setTodos([...todos, data.todo])
+                setTodos([...todos, data.todo_lists])
                 setTask("")
             } catch (err) {
                 setError(err.message)
@@ -90,9 +89,10 @@ export default function ToDoList() {
                 })
                 if (!res.ok) throw new Error("Failed to update todo")
                 const data = await res.json()
-                setTodos(todos.map((t) => (t.id === id ? data.todo : t)))
+                setTodos(todos.map((t) => (t.id === id ? data.todo_lists : t)))
             } catch (err) {
                 console.error(err)
+                setError(err)
             }
         })()
     }
@@ -116,6 +116,9 @@ export default function ToDoList() {
         })()
     }
 
+    if(loading) return <Loading />
+    if(error) return <Error errormessage={error.message} />
+
     return (
         <>
             <div className="todobody">
@@ -132,7 +135,7 @@ export default function ToDoList() {
                                     {item.completed ? '✓' : ''}
                                 </span>
                                 <span className="texttask" onClick={() => toggleComplete(item.id)}>
-                                    {item.text}
+                                    {item.title}
                                 </span>
                             </div>
                             <button onClick={() => deleteTodo(item.id)} className="tododeletebtn">

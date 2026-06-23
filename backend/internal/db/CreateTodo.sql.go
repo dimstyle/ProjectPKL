@@ -11,32 +11,25 @@ import (
 
 const createTodo = `-- name: CreateTodo :one
 INSERT INTO todo_list(
-  user_id, project_id, title, description
-) VALUES ($1, $2, $3, $4)
-RETURNING id, project_id, user_id, title, description, completed, created_at, updated_at
+  user_id, project_id, title
+) VALUES ($1, $2, $3)
+RETURNING id, project_id, user_id, title, completed, created_at, updated_at
 `
 
 type CreateTodoParams struct {
-	UserID      int32  `json:"user_id"`
-	ProjectID   int32  `json:"project_id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
+	UserID    int32  `json:"user_id"`
+	ProjectID int32  `json:"project_id"`
+	Title     string `json:"title"`
 }
 
 func (q *Queries) CreateTodo(ctx context.Context, arg CreateTodoParams) (TodoList, error) {
-	row := q.db.QueryRow(ctx, createTodo,
-		arg.UserID,
-		arg.ProjectID,
-		arg.Title,
-		arg.Description,
-	)
+	row := q.db.QueryRow(ctx, createTodo, arg.UserID, arg.ProjectID, arg.Title)
 	var i TodoList
 	err := row.Scan(
 		&i.ID,
 		&i.ProjectID,
 		&i.UserID,
 		&i.Title,
-		&i.Description,
 		&i.Completed,
 		&i.CreatedAt,
 		&i.UpdatedAt,

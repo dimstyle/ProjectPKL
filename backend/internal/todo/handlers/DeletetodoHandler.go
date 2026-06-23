@@ -29,6 +29,7 @@ func (handler *DeletetodoHandler) DeleteList(c *gin.Context){
 		c.JSON(http.StatusInternalServerError, gin.H{
 		"message" : "internal server error",
 		})
+		return
 	}
 
 	JwtClaims, ok := tokenobj.(*jwt.Claims)
@@ -36,6 +37,7 @@ func (handler *DeletetodoHandler) DeleteList(c *gin.Context){
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message" : "internal server error",
 		})
+		return
 	}
 
 	err := c.ShouldBindJSON(&DeleteRequest)

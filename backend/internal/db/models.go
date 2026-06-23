@@ -9,10 +9,11 @@ import (
 )
 
 type ProjectsTodoList struct {
-	ID        int32     `json:"id"`
-	UserID    int32     `json:"user_id"`
-	Title     string    `json:"title"`
-	CreatedAt time.Time `json:"created_at"`
+	ID          int32     `json:"id"`
+	UserID      int32     `json:"user_id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	CreatedAt   time.Time `json:"created_at"`
 }
 
 type RefreshToken struct {
@@ -31,14 +32,13 @@ type TextPost struct {
 }
 
 type TodoList struct {
-	ID          int32     `json:"id"`
-	ProjectID   int32     `json:"project_id"`
-	UserID      int32     `json:"user_id"`
-	Title       string    `json:"title"`
-	Description string    `json:"description"`
-	Completed   bool      `json:"completed"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	ID        int32     `json:"id"`
+	ProjectID int32     `json:"project_id"`
+	UserID    int32     `json:"user_id"`
+	Title     string    `json:"title"`
+	Completed bool      `json:"completed"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type User struct {

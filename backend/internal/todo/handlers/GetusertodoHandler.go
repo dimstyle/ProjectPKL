@@ -33,6 +33,7 @@ func (handler *GetusertodoHandler) GetTodo(c *gin.Context){
 		c.JSON(http.StatusInternalServerError, gin.H{
 		"message" : "internal server error",
 		})
+		return
 	}
 
 	JwtClaims, ok := tokenobj.(*jwt.Claims)
@@ -40,6 +41,7 @@ func (handler *GetusertodoHandler) GetTodo(c *gin.Context){
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message" : "internal server error",
 		})
+		return
 	}
 
 

@@ -58,32 +58,32 @@ function Dashboard() {
         })();
     }, [accessToken, setUser, user]);
 
-    useEffect(() => {
-        if (!user || !accessToken) return;
+    // useEffect(() => {
+    //     if (!user || !accessToken) return;
 
-        setPostsLoading(true);
+    //     setPostsLoading(true);
 
-        (async () => {
-            try {
-                const response = await fetch("/api/user/posts", {
-                    headers: {
-                        Authorization: accessToken,
-                    },
-                });
+    //     (async () => {
+    //         try {
+    //             const response = await fetch("/api/user/posts", {
+    //                 headers: {
+    //                     Authorization: accessToken,
+    //                 },
+    //             });
 
-                if (!response.ok) {
-                    throw new Error("Could not load your posts.");
-                }
+    //             if (!response.ok) {
+    //                 throw new Error("Could not load your posts.");
+    //             }
 
-                const data = await response.json();
-                setUserPosts(data.posts || []);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setPostsLoading(false);
-            }
-        })();
-    }, [accessToken, user]);
+    //             const data = await response.json();
+    //             setUserPosts(data.posts || []);
+    //         } catch (err) {
+    //             console.error(err);
+    //         } finally {
+    //             setPostsLoading(false);
+    //         }
+    //     })();
+    // }, [accessToken, user]);
 
     useEffect(() => {
         if (!user || !accessToken) return;
@@ -169,7 +169,7 @@ function Dashboard() {
                                         "Content-Type": "application/json",
                                         Authorization: accessToken,
                                     },
-                                    body: JSON.stringify({ title: todoTitle }),
+                                    body: JSON.stringify({ title: todoTitle , description: todoDescription}),
                                 });
 
                                 if (!res.ok) {
@@ -194,10 +194,10 @@ function Dashboard() {
                             <label>Title</label>
                             <input className="todotitle" value={todoTitle} onChange={e => setTodoTitle(e.target.value)} />
                         </div>
-                        {/* <div className="tododescarea">
+                        <div className="tododescarea">
                             <label>Description</label>
                             <textarea className="tododesc" value={todoDescription} onChange={e => setTodoDescription(e.target.value)} />
-                        </div> */}
+                        </div>
                         <div className="todobuttons">
                             <button className="dashboard-button" type="submit" disabled={todoLoading}>{todoLoading ? "Creating..." : "Create"}</button>
                             <button type="button" className="dashboard-button dashboard-button--muted" onClick={() => setShowTodoForm(false)} style={{ marginLeft: 8 }}>Cancel</button>
@@ -221,6 +221,7 @@ function Dashboard() {
                                     style={{ textDecoration: 'none', color: '#007bff', fontWeight: 'bold' }}
                                 >
                                     {project.title}
+                                    {project.description}
                                 </Link>
                                 <p style={{ margin: '5px 0 0 0', fontSize: '0.85em', color: '#666' }}>
                                     Created: {new Date(project.created_at).toLocaleDateString()}

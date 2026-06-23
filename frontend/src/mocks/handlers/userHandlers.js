@@ -134,16 +134,17 @@ export const userHandlers = [
         }
 
         const body = await request.json().catch(() => ({}))
-        const { title } = body
+        const { title, description } = body
 
-        if (!title) {
-            return HttpResponse.json({ message: "title is required" }, { status: 400 })
+        if (!title || !description) {
+            return HttpResponse.json({ message: "title and description are required" }, { status: 400 })
         }
 
         const newProject = {
             id: todoProjects.length ? Math.max(...todoProjects.map(p => p.id)) + 1 : 1,
             user_id: id,
             title,
+            description,
             created_at: new Date().toISOString()
         }
 
@@ -172,18 +173,14 @@ export const userHandlers = [
         }
 
         const body = await request.json().catch(() => ({}))
-        const { projectid, user_id, title, description, completed } = body
+        const { projectid, title } = body
 
-        if (projectid == null && user_id == null) {
-            return HttpResponse.json({ message: "projectid or user_id is required" }, { status: 400 })
+        if (projectid == null ) {
+            return HttpResponse.json({ message: "projectid is required" }, { status: 400 })
         }
 
-        if (!title || !description || typeof completed !== 'boolean') {
-            return HttpResponse.json({ message: "title, description, and completed(boolean) are required" }, { status: 400 })
-        }
-
-        if (user_id != null && user_id !== id) {
-            return HttpResponse.json({ message: "user_id must match authenticated user" }, { status: 403 })
+        if (!title || typeof completed !== 'boolean') {
+            return HttpResponse.json({ message: "title, and completed(boolean) are required" }, { status: 400 })
         }
 
         let project = null
@@ -206,14 +203,13 @@ export const userHandlers = [
             user_id: id,
             project_id: project ? project.id : null,
             title,
-            description,
             completed,
             created_at: new Date().toISOString(),
         }
 
         todoLists.push(newTodo)
 
-        return HttpResponse.json({ message: "success", todo: newTodo }, { status: 201 })
+        return HttpResponse.json({ message: "success", todo_lists: newTodo }, { status: 201 })
     }),
 
     http.patch("/api/user/updatetodo", async ({ request }) => {
@@ -330,7 +326,7 @@ export const userHandlers = [
             results = results.filter(t => t.project_id === pid)
         }
 
-        return HttpResponse.json({ message: "success", todos: results }, { status: 200 })
+        return HttpResponse.json({ message: "success", todo_lists: results }, { status: 200 })
     })
 
     ,

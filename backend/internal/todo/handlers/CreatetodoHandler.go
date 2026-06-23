@@ -5,6 +5,7 @@ import (
 	"backend/internal/todo/dto"
 	"backend/internal/todo/services"
 	"backend/pkg/jwt"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -27,16 +28,20 @@ func (handler *CreatetodoHandler) CreateTodo(c *gin.Context){
 
 	tokenobj, exists := c.Get("jwt_claims")
 	if !exists {
+		fmt.Println("haha")
 		c.JSON(http.StatusInternalServerError, gin.H{
 		"message" : "internal server error",
 		})
+		return
 	}
 
 	JwtClaims, ok := tokenobj.(*jwt.Claims)
 	if !ok{
+		fmt.Println(tokenobj)
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message" : "internal server error",
 		})
+		return
 	}
 
 
@@ -44,30 +49,29 @@ func (handler *CreatetodoHandler) CreateTodo(c *gin.Context){
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message" : "bad request",
-			"list_id" : nil,
-			"completed" : nil,
 		})
+		return
 	}
 
 	Todolist, err := handler.service.CreateTodo(ctx,db.CreateTodoParams{
 		UserID: JwtClaims.UserID,
 		ProjectID: CreateRequest.ProjectID,
 		Title: CreateRequest.Title,
-		Description: CreateRequest.Description,
 	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message"  : "internal server error",
-			"list_id" : nil,
-			"completed" : nil,
 		})
 		return
 	}
 
 	c.JSON(http.StatusCreated,gin.H{
 		"message" : "todo successfully created",
-		"list_id" : Todolist.ID,
-		"completed" : Todolist.Completed,
+		"todo_lists" : dto.CreateToDoResponse{
+			ID: Todolist.ID,
+			Title: Todolist.Title,
+			Completed: Todolist.Completed,
+		},
 	})
 
 }

@@ -13,7 +13,6 @@ const getUserToDoByProjectID = `-- name: GetUserToDoByProjectID :many
 SELECT
 id, -- Will generate ` + "`" + `json:"id"` + "`" + `
 title, -- Will generate ` + "`" + `json:"title"` + "`" + `
-description, -- Will generate ` + "`" + `json:"description"` + "`" + `
 completed -- Will generate ` + "`" + `json:"completed"` + "`" + `
 FROM todo_list 
 WHERE project_id = $1 AND user_id = $2
@@ -25,10 +24,9 @@ type GetUserToDoByProjectIDParams struct {
 }
 
 type GetUserToDoByProjectIDRow struct {
-	ID          int32  `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Completed   bool   `json:"completed"`
+	ID        int32  `json:"id"`
+	Title     string `json:"title"`
+	Completed bool   `json:"completed"`
 }
 
 func (q *Queries) GetUserToDoByProjectID(ctx context.Context, arg GetUserToDoByProjectIDParams) ([]GetUserToDoByProjectIDRow, error) {
@@ -40,12 +38,7 @@ func (q *Queries) GetUserToDoByProjectID(ctx context.Context, arg GetUserToDoByP
 	var items []GetUserToDoByProjectIDRow
 	for rows.Next() {
 		var i GetUserToDoByProjectIDRow
-		if err := rows.Scan(
-			&i.ID,
-			&i.Title,
-			&i.Description,
-			&i.Completed,
-		); err != nil {
+		if err := rows.Scan(&i.ID, &i.Title, &i.Completed); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

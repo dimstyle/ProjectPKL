@@ -30,6 +30,7 @@ func (handler *CreatetodolistprojectHandler) CreateProject(c *gin.Context){
 		c.JSON(http.StatusInternalServerError, gin.H{
 		"message" : "internal server error",
 		})
+		return
 	}
 
 	JwtClaims, ok := tokenobj.(*jwt.Claims)
@@ -37,6 +38,7 @@ func (handler *CreatetodolistprojectHandler) CreateProject(c *gin.Context){
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message" : "internal server error",
 		})
+		return
 	}
 
 	err := c.ShouldBindJSON(&CreateRequest)
@@ -50,6 +52,7 @@ func (handler *CreatetodolistprojectHandler) CreateProject(c *gin.Context){
 	err = handler.service.CreateProject(ctx, db.CreateToDoListProjectParams{
 		Title: CreateRequest.Title,
 		UserID: JwtClaims.UserID,
+		Description: CreateRequest.Description,
 	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
