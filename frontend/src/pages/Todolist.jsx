@@ -1,9 +1,16 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "../css/todolist.css"
 
 export default function ToDoList() {
-    const [todos, setTodos] = useState([])
+    const [todos, setTodos] = useState(() => {
+        const savedTodos = localStorage.getItem('my_todo_list');
+        return savedTodos ? JSON.parse(savedTodos) : [];
+    })
     const [task, setTask] = useState('')
+
+    useEffect(() => {
+        localStorage.setItem('my_todo_list', JSON.stringify(todos));
+    }, [todos]);
 
     const addTodo = (e) => {
         e.preventDefault();
@@ -15,7 +22,7 @@ export default function ToDoList() {
             completed: false
         }
 
-        setTodos([...todos, newTodo])
+        setTodos([newTodo, ...todos])
         setTask('')
     }
 
