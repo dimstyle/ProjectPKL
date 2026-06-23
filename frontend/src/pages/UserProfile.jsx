@@ -15,19 +15,19 @@ export default function UserProfile() {
     const [error, setError] = useState()
     const [loading,setLoading] = useState(true)
     const [user, setUser] = useState()
-
+    
     useEffect(()=>{
         (async ()=>{
             try{
-                const response = await fetch(`/api/users/profiles/${userId}`)
+                const response = await fetch(`/api/users/profile/${userId}`)
 
                 if(!response.ok){
-                    throw new Error("er")
+                    throw new Error("error not found")
                 }
 
                 const userData = await response.json()
                 
-                setUser(userData)
+                setUser(userData.user)
                 
             }catch(err){
                 setError(err)
@@ -69,7 +69,7 @@ export default function UserProfile() {
                     <Link className="logout" to="/">Back</Link>
                 </div>
                 <div>
-                    <Outlet context={user}/>
+                    <Outlet context={{user}}/>
                 </div>
             </div>
         </>

@@ -27,6 +27,8 @@ func (handler *CreatetodoHandler) CreateTodo(c *gin.Context){
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message" : "bad request",
+			"list_id" : nil,
+			"completed" : nil,
 		})
 	}
 
@@ -38,6 +40,8 @@ func (handler *CreatetodoHandler) CreateTodo(c *gin.Context){
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message"  : "internal server error",
+			"list_id" : nil,
+			"completed" : nil,
 		})
 		return
 	}
