@@ -35,6 +35,10 @@ export default function ToDoList() {
         })()
     }, [projectId, accessToken, refreshTodos])
 
+    useEffect(() => {
+        localStorage.setItem('my_todo_list', JSON.stringify(todos));
+    }, [todos]);
+
     const addTodo = (e) => {
         e.preventDefault()
         if (!task.trim()) return
