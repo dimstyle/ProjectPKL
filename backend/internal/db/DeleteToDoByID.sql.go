@@ -12,7 +12,7 @@ import (
 const deleteToDoByID = `-- name: DeleteToDoByID :one
 DELETE FROM todo_list 
 WHERE id = $1
-RETURNING id, project_id, title, description, completed, created_at, updated_at
+RETURNING id, project_id, user_id, title, description, completed, created_at, updated_at
 `
 
 func (q *Queries) DeleteToDoByID(ctx context.Context, id int32) (TodoList, error) {
@@ -21,6 +21,7 @@ func (q *Queries) DeleteToDoByID(ctx context.Context, id int32) (TodoList, error
 	err := row.Scan(
 		&i.ID,
 		&i.ProjectID,
+		&i.UserID,
 		&i.Title,
 		&i.Description,
 		&i.Completed,

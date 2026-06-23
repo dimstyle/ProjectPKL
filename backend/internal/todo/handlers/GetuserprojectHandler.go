@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"backend/internal/db"
-	"backend/internal/user/services"
+	"backend/internal/todo/services"
 	"backend/pkg/jwt"
 	"errors"
 	"net/http"
@@ -11,17 +11,17 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-func NewMyprofileHandler(q *db.Queries) *MyprofileHandler{
-	return &MyprofileHandler{
-		service: services.NewMyprofileService(q),
+func NewGetuserprojectHandler(q *db.Queries) *GetuserprojectHandler {
+	return &GetuserprojectHandler{
+		service: services.NewGetuserprojectService(q),
 	}
 }
 
-type MyprofileHandler struct{
-	service *services.MyprofileService
+type GetuserprojectHandler struct {
+	service *services.GetuserprojectService
 }
 
-func (handler *MyprofileHandler) GetMyProfile(c *gin.Context){
+func (handler *GetuserprojectHandler) GetProject(c *gin.Context){
 	ctx := c.Request.Context()
 
 	tokenobj, exists := c.Get("jwt_claims")
@@ -38,21 +38,25 @@ func (handler *MyprofileHandler) GetMyProfile(c *gin.Context){
 		})
 	}
 
-	user, err := handler.service.GetMyProfile(ctx, JwtClaims.UserID)
+
+	projects, err := handler.service.GetProject(ctx,JwtClaims.UserID)
 	if err != nil{
 		if errors.Is(err, pgx.ErrNoRows){
 			c.JSON(http.StatusNotFound, gin.H{
-				"message" : "user not found",
+				"message" : "no projects found",
 			})
 			return
 		}
 		c.JSON(http.StatusInternalServerError,gin.H{
-			"message" : "internal server error", 
+			"message" : "internal server error",
 		})
+		return 
 	}
 
-	c.JSON(http.StatusOK,gin.H{
-		"message" : "user found",
-		"user" : user,
+	c.JSON(http.StatusOK, gin.H{
+		"message" : "all projects found",
+		"projects" : projects,
+
 	})
+	
 }

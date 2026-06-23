@@ -4,6 +4,7 @@ import (
 	"backend/internal/db"
 	"backend/internal/todo/dto"
 	"backend/internal/todo/services"
+	"backend/pkg/jwt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -23,6 +24,22 @@ func (handler *CreatetodoHandler) CreateTodo(c *gin.Context){
 	ctx := c.Request.Context()
 	var CreateRequest dto.CreateToDoRequest
 
+
+	tokenobj, exists := c.Get("jwt_claims")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{
+		"message" : "internal server error",
+		})
+	}
+
+	JwtClaims, ok := tokenobj.(*jwt.Claims)
+	if !ok{
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message" : "internal server error",
+		})
+	}
+
+
 	err := c.ShouldBindJSON(&CreateRequest)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -33,6 +50,7 @@ func (handler *CreatetodoHandler) CreateTodo(c *gin.Context){
 	}
 
 	Todolist, err := handler.service.CreateTodo(ctx,db.CreateTodoParams{
+		UserID: JwtClaims.UserID,
 		ProjectID: CreateRequest.ProjectID,
 		Title: CreateRequest.Title,
 		Description: CreateRequest.Description,

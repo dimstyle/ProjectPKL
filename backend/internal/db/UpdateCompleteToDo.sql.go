@@ -15,7 +15,7 @@ SET
     completed = $2,
     updated_at = NOW()
 WHERE id = $1
-RETURNING id, project_id, title, description, completed, created_at, updated_at
+RETURNING id, project_id, user_id, title, description, completed, created_at, updated_at
 `
 
 type UpdateCompleteToDoParams struct {
@@ -29,6 +29,7 @@ func (q *Queries) UpdateCompleteToDo(ctx context.Context, arg UpdateCompleteToDo
 	err := row.Scan(
 		&i.ID,
 		&i.ProjectID,
+		&i.UserID,
 		&i.Title,
 		&i.Description,
 		&i.Completed,
