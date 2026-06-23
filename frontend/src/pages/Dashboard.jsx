@@ -174,28 +174,6 @@ function Dashboard() {
                     </form>
                 </div>
             )}
-
-            {/* <div className="dashboard-posts">
-                <div className="dashboard-posts-header">
-                    <h2>Your Posts</h2>
-                    {postsLoading && <span>Loading posts...</span>}
-                </div>
-
-                {userPosts.length === 0 && !postsLoading ? (
-                    <p className="dashboard-empty">No posts yet. Create your first post.</p>
-                ) : (
-                    userPosts.map((post, index) => (
-                        <div key={`${post.title}-${index}`} className="dashboard-post">
-                            <h3>{post.title}</h3>
-                            <p>{post.content}</p>
-                            <div className="dashboard-post-meta">
-                                <span>{post.username}</span>
-                                <span>{new Date(post.created_at).toLocaleString()}</span>
-                            </div>
-                        </div>
-                    ))
-                )}
-            </div> */}
         </div>
     );
 }
