@@ -173,19 +173,18 @@ export const userHandlers = [
         }
 
         const body = await request.json().catch(() => ({}))
-        const { projectid, title } = body
-
-        if (projectid == null ) {
-            return HttpResponse.json({ message: "projectid is required" }, { status: 400 })
+        const { project_id, title } = body
+        if (project_id == null ) {
+            return HttpResponse.json({ message: "project_id is required" }, { status: 400 })
         }
 
-        if (!title || typeof completed !== 'boolean') {
-            return HttpResponse.json({ message: "title, and completed(boolean) are required" }, { status: 400 })
+        if (!title) {
+            return HttpResponse.json({ message: "title is required" }, { status: 400 })
         }
 
         let project = null
-        if (projectid != null) {
-            const projectIdNumber = Number(projectid)
+        if (project_id != null) {
+            const projectIdNumber = Number(project_id)
             if (Number.isNaN(projectIdNumber)) {
                 return HttpResponse.json({ message: "projectid must be a number" }, { status: 400 })
             }
@@ -203,8 +202,7 @@ export const userHandlers = [
             user_id: id,
             project_id: project ? project.id : null,
             title,
-            completed,
-            created_at: new Date().toISOString(),
+            completed: false
         }
 
         todoLists.push(newTodo)
@@ -244,12 +242,13 @@ export const userHandlers = [
         }
 
         if (todo.user_id !== id) {
+            console.log(todo.user_id, id)
             return HttpResponse.json({ message: "Todo does not belong to authenticated user" }, { status: 403 })
         }
 
         todo.completed = completed
 
-        return HttpResponse.json({ message: "success", todo }, { status: 200 })
+        return HttpResponse.json({ message: "success", todo_lists: todo }, { status: 200 })
     }),
 
     http.delete("/api/user/deletetodo", async ({ request }) => {

@@ -221,6 +221,7 @@ function Dashboard() {
                                     style={{ textDecoration: 'none', color: '#007bff', fontWeight: 'bold' }}
                                 >
                                     {project.title}
+                                    {" - "} 
                                     {project.description}
                                 </Link>
                                 <p style={{ margin: '5px 0 0 0', fontSize: '0.85em', color: '#666' }}>

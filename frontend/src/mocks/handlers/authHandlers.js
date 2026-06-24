@@ -19,11 +19,9 @@ export const authHandlers = [
     }),
 
     // refresh access token using HttpOnly refresh cookie
-    http.get("/api/auth/refresh_token", ({ request }) => {
 
-        const cookie = request.headers.get("cookie") || ""
-
-        const match = cookie.match(/refresh_token_(\d+)/)
+    http.get("/api/auth/refresh_token", ({ request, cookies }) => {
+        const match = cookies.refresh_token.match(/refresh_token_(\d+)/)
         if (!match) {
             return HttpResponse.json({ message: "Refresh token missing or invalid" }, { status: 401 })
         }
