@@ -112,6 +112,25 @@ function Dashboard() {
         })();
     }, [accessToken, user, refreshProjects]);
 
+    const deleteTodo = (id) => {
+        (async () => {
+            try {
+                const res = await fetch("/api/user/deletetodoproject", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: accessToken,
+                    },
+                    body: JSON.stringify({ id }),
+                })
+                if (!res.ok) throw new Error("Failed to delete todo")
+                setRefreshProjects(prev => prev + 1)
+            } catch (err) {
+                console.error(err)
+            }
+        })()
+    }
+
     if (loading) return <Loading />;
     if (error) return <Error errormessage={error} />;
     if (!user) return <Error errormessage="User data is not available." />;
@@ -227,6 +246,9 @@ function Dashboard() {
                                 <p style={{ margin: '5px 0 0 0', fontSize: '0.85em', color: '#666' }}>
                                     Created: {new Date(project.created_at).toLocaleDateString()}
                                 </p>
+                                <button onClick={() => deleteTodo(project.id)} className="tododeletebtn">
+                                        ✕
+                                </button>
                             </li>
                         ))}
                     </ul>

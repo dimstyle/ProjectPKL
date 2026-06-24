@@ -293,6 +293,49 @@ export const userHandlers = [
     })
     ,
 
+    http.delete("/api/user/deletetodoproject" , async ({ request }) => {
+        const auth = request.headers.get("Authorization") || ""
+
+        if (!auth) {
+            return HttpResponse.json({ message: "Authorization header missing" }, { status: 401 })
+        }
+
+        const match = auth.match(/^access_token_(\d+)$/)
+        if (!match) {
+            return HttpResponse.json({ message: "Invalid token format" }, { status: 401 })
+        } 
+
+        const id = Number(match[1])
+        const user = getById(id)
+
+        if (!user) {
+            return HttpResponse.json({ message: "Invalid token user" }, { status: 401 })
+        }
+
+        const body = await request.json().catch(() => ({}))
+        const { id: projectID } = body
+
+        if (projectID == null) {
+            return HttpResponse.json({ message: "id is required" }, { status: 400 })
+        }
+
+        const projectIndex = todoProjects.findIndex(t => t.id === Number(projectID))
+        if (projectIndex === -1) {
+            return HttpResponse.json({ message: "Project not found" }, { status: 404 })
+        }
+
+        const project = todoProjects[projectIndex]
+        if (project.user_id !== id) {
+            return HttpResponse.json({ message: "Project does not belong to authenticated user" }, { status: 403 })
+        }
+
+        todoProjects.splice(projectIndex, 1)
+
+        return HttpResponse.json({ message: "success", deletedId: projectID }, { status: 200 })
+        
+    })
+    ,
+
     http.get("/api/user/gettodolist", ({ request }) => {
         const auth = request.headers.get("Authorization") || ""
 
